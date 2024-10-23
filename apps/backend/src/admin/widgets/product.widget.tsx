@@ -23,25 +23,35 @@ const ProductWidget = () => {
     }
   }
 
+  const editDocument = () => {
+    // Implement your edit logic here
+  }
+  const addDocument = () => {
+    // Implement your add logic here
+  }
+  const deleteDocument = () => {
+    // Implement your delete logic here
+  }
+
   const itemMenu = () =>{
     return (
       <DropdownMenu>
         <DropdownMenu.Trigger asChild>
-          <IconButton>
+          <IconButton>  
             <EllipsisHorizontal />
           </IconButton>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          <DropdownMenu.Item className="gap-x-2">
+          <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
             <PencilSquare className="text-ui-fg-subtle" />
             Edit
           </DropdownMenu.Item>
-          {/* <DropdownMenu.Item className="gap-x-2">
+          {/* <DropdownMenu.Item className="gap-x-2" onClick={addDocument}>
             <Plus className="text-ui-fg-subtle" />
             Add
           </DropdownMenu.Item> */}
           <DropdownMenu.Separator />
-          <DropdownMenu.Item className="gap-x-2">
+          <DropdownMenu.Item className="gap-x-2" onClick={deleteDocument}>
             <Trash className="text-ui-fg-subtle" />
             Delete
           </DropdownMenu.Item>
