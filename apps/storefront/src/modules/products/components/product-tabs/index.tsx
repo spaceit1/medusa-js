@@ -88,14 +88,18 @@ const ProductSpecificationsTab = ({ product }: ProductTabsProps) => {
             </Table.Row>
           )}
 
-          {product.metadata &&
+          {product.metadata && 
             Object.entries(product.metadata).map(([key, value]) => (
               <Table.Row key={key}>
-                <Table.Cell className="border-r">
-                  <span className="font-semibold">{key}</span>
+                <Table.Cell className="border-r">                 
+                    <span className="font-semibold">{key}</span>
                 </Table.Cell>
                 <Table.Cell className="px-4">
+                {key === "Catalog card" ?
+                    <span className="font-semibold"><a href={value as string}>download</a></span> 
+                  :
                   <p>{value as string}</p>
+                }
                 </Table.Cell>
               </Table.Row>
             ))}
