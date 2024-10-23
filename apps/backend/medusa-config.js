@@ -1,10 +1,18 @@
 const { QUOTE_MODULE } = require("./src/modules/quote");
 const { loadEnv, defineConfig, Modules } = require("@medusajs/framework/utils");
+const { LocalFileService } = require("@medusajs/medusa");
+
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
 module.exports = defineConfig({
   projectConfig: {
+    fileService: {
+      provider: "local",
+      options: {
+        uploadDir: "uploads", // Katalog, w którym będą przechowywane pliki
+      },
+    },
     databaseUrl: process.env.DATABASE_URL,
     http: {
       storeCors: process.env.STORE_CORS,
