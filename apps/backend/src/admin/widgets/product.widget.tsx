@@ -93,7 +93,6 @@ const ProductWidget = () => {
         />
       </div>
 
-      {/* Sekcja wyboru języka i rodzaju dokumentu */}
       <div className="px-6 py-4">
         <div className="mb-4">
           <label className="block mb-2">Select Language:</label>
