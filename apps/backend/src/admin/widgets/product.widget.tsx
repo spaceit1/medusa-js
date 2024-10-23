@@ -1,5 +1,6 @@
 import { defineWidgetConfig } from "@medusajs/admin-sdk"
-import { Container, Heading, Button, Select, Table } from "@medusajs/ui"
+import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } from "@medusajs/ui"
+import { EllipsisHorizontal, PencilSquare, Plus, Trash } from "@medusajs/icons"
 import { useState, useRef } from "react"
 
 const ProductWidget = () => {
@@ -21,6 +22,33 @@ const ProductWidget = () => {
       fileInputRef.current.click() 
     }
   }
+
+  const itemMenu = () =>{
+    return (
+      <DropdownMenu>
+        <DropdownMenu.Trigger asChild>
+          <IconButton>
+            <EllipsisHorizontal />
+          </IconButton>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Item className="gap-x-2">
+            <PencilSquare className="text-ui-fg-subtle" />
+            Edit
+          </DropdownMenu.Item>
+          {/* <DropdownMenu.Item className="gap-x-2">
+            <Plus className="text-ui-fg-subtle" />
+            Add
+          </DropdownMenu.Item> */}
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item className="gap-x-2">
+            <Trash className="text-ui-fg-subtle" />
+            Delete
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu>
+    )
+}
 
   const handleUpload = () => {
     if (files.length > 0 && language && documentType) {
@@ -68,9 +96,9 @@ const ProductWidget = () => {
               <Select.Value placeholder="Select a language" />
             </Select.Trigger>
             <Select.Content className="z-50">
-              <Select.Item value="pl">Polish (PL)</Select.Item>
-              <Select.Item value="en">English (EN)</Select.Item>
-              <Select.Item value="de">German (DE)</Select.Item>
+              <Select.Item value="PL">Polish (PL)</Select.Item>
+              <Select.Item value="EN">English (EN)</Select.Item>
+              <Select.Item value="DE">German (DE)</Select.Item>
             </Select.Content>
           </Select>
         </div>
@@ -139,6 +167,7 @@ const ProductWidget = () => {
                         </a>
                       )}
                     </Table.Cell>
+                    <Table.Cell>{itemMenu()}</Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
