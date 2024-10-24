@@ -59,7 +59,9 @@ const ProductWidget = () => {
       </DropdownMenu>
     )
 }
+    const handleSave = () => {
 
+    }
   const handleUpload = () => {
     if (files.length > 0 && language && documentType) {
       const newUploadedFiles = files.map(file => ({
@@ -131,13 +133,20 @@ const ProductWidget = () => {
             </Select.Content>
           </Select>
         </div>
-
-        <Button 
-          variant="primary" 
-          onClick={handleUpload}
-        >
-          Upload
-        </Button>
+        <div className="flex flex-row gap-5">
+            <Button 
+                variant="primary" 
+                onClick={handleUpload}
+            >
+                Upload
+            </Button>
+            <Button 
+                variant="primary" 
+                onClick={handleSave}
+            >
+                Save
+            </Button>
+        </div>
       </div>
 
       {/* Tabela z plikami */}
