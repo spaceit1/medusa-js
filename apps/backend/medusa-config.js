@@ -23,6 +23,9 @@ module.exports = defineConfig({
     },
   },
   modules: {
+    documentModuleService: {
+      resolve: "./modules/documents",
+    },
     companyModuleService: {
       resolve: "./modules/company",
     },
