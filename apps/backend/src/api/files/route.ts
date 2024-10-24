@@ -46,7 +46,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
                         file_name, language, document_type, product_id, created_at, updated_at, deleted_at
                         ) 
                         VALUES ('111', 'pl', '12', 'prod_01JAW9P8STC045RWRASHP6JD5J', NOW(), NOW(), NULL);
-                        `;
+                `;
     await pool.query(query);
     
 
