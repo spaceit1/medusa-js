@@ -2,7 +2,8 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import formidable from "formidable";
 import fs from "fs";
 import path from "path";
-import { Pool } from "pg"; 
+import { Pool } from "pg";
+import dotenv from "dotenv"; 
 
 // Initialize PostgreSQL client
 const pool = new Pool({
@@ -12,6 +13,18 @@ const pool = new Pool({
     password: 'admin',
     port: 5432,          
 });
+
+export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
+    
+    const query = `
+                        INSERT INTO public.document (
+                        file_name, language, document_type, product_id, created_at, updated_at, deleted_at
+                        ) 
+                        VALUES ('111', 'pl', '12', 'prod_01JAW9P8STC045RWRASHP6JD5J', NOW(), NOW(), NULL);
+                        `;
+
+    res.send(await pool.query(query)); 
+}
 
 export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
 
@@ -28,46 +41,20 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
         filename: (name, ext, part) => part.originalFilename || `file-${Date.now()}${ext}`, // Define how to name the files
     });
 
+    const query = `
+                        INSERT INTO public.document (
+                        file_name, language, document_type, product_id, created_at, updated_at, deleted_at
+                        ) 
+                        VALUES ('111', 'pl', '12', 'prod_01JAW9P8STC045RWRASHP6JD5J', NOW(), NOW(), NULL);
+                        `;
+    await pool.query(query);
     
-    form.parse(req, async (err, fields, files) => {
-        if (err) {
-            console.error("Error parsing the files:", err);
-            return res.status(500).json({ error: "File upload failed", details: err.message });
-        }
 
-        try {
-            // Iterate over the uploaded files and save metadata in the database
-            for (const key in files) {
-                if (files.hasOwnProperty(key)) {
-                    const file: any = files[key]; // Get the file object
-                    const filename = file.newFilename; // Formidable stores the file with this name in the upload directory
-                    const language = fields.language || null; // Get language from form fields
-                    const documentType = fields.documentType || null; // Get document type from form fields
-                    const product_id = fields.product_id || null; // Get product ID (assuming you are linking files to products)
-
-                    // Insert metadata into the PostgreSQL database
-                    const query = `
-                        INSERT INTO document (filename, language, document_type, product_id)
-                        VALUES ($1, $2, $3, $4)
-                        RETURNING id;
-                    `;
-                    const values = [filename, language, documentType, product_id];
-                    const result = await pool.query(query, values);
-
-                    // Log the ID of the inserted record
-                    console.log(`File metadata saved with ID: ${result.rows[0].id}`);
-                }
-            }
-
-            // Respond with success after all files have been processed
-            return res.status(200).json({ message: 'Files uploaded and metadata saved successfully', files });
-        } catch (dbError) {
-            // Handle database errors
-            console.error("Database error:", dbError);
-            return res.status(400).json({ error: "Failed to save file metadata", details: dbError.message });
-        }
+    form.parse(req, async (err, fields, files) => { 
+        res.status(200).json({ message: req.body });
     });
 
     
-    res.status(200).json({ message: 'File uploaded successfully' });
+    res.status(200).json({ message: req.body });
 };
+
