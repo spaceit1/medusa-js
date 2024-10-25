@@ -7,7 +7,7 @@ const ProductWidget = () => {
     const [files, setFiles] = useState<File[]>([]);
     const [language, setLanguage] = useState<string>("");
     const [documentType, setDocumentType] = useState<string>("");
-    const [uploadedFiles, setUploadedFiles] = useState<Array<{ file: File, language: string, documentType: string }>>([]);
+    const [uploadedFiles, setUploadedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,14 +27,14 @@ const ProductWidget = () => {
         // Implement your edit logic here
     };
 
-    const deleteDocument = () => {
-        // Implement your delete logic here
+    const deleteDocument = (index: number) => {
+        setUploadedFiles(uploadedFiles.filter((_, i) => i !== index)); // Remove file at index
     };
 
     const handleUpload = () => {
         if (files.length > 0 && language && documentType) {
             const newUploadedFiles = files.map(file => ({
-                file,
+                fileName: file.name,  // Zapisujemy tylko nazwę pliku
                 language,
                 documentType,
             }));
@@ -47,35 +47,29 @@ const ProductWidget = () => {
 
     const handleSave = async () => {
         if (uploadedFiles.length > 0) {
-            const formData = new FormData();
-
-            let productUrl = location.href;
-            let splittedUrl = productUrl.split('/');
-
-            let id = splittedUrl[splittedUrl.length - 1];
-            
-
-            // Add files to FormData
-            uploadedFiles.forEach(item => {
-                formData.append('product_id', id); // Add product ID
-                formData.append('files', item.file); // Add files
-                formData.append('language', item.language); // Add language
-                formData.append('documentType', item.documentType); // Add document type
-            });
-
+            // Prepare JSON data to be sent
+            const dataToSend = {
+                product_id: getProductIdFromUrl(),
+                documents: uploadedFiles.map(item => ({
+                    file_name: item.fileName, // Zapisujemy tylko nazwę pliku
+                    language: item.language,
+                    document_type: item.documentType,
+                })),
+            };
+    
             try {
-                // Upload files to Medusa server
-                const response = await fetch('http://localhost:9000/files', {
+                // Upload data to Medusa server
+                const response = await fetch('http://localhost:9000/product-documents/upload', {
                     method: 'POST',
-                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/json', // Set content type to JSON
+                    },
+                    body: JSON.stringify(dataToSend), // Send JSON data
                 });
-
-                console.log(formData);
-
-                if (await response.ok) {
+    
+                if (response.ok) {
                     const result = await response.json();
-                    console.log('Files saved successfully:', result);
-
+                    console.log(result);
                     // Reset uploadedFiles after saving
                     setUploadedFiles([]);
                 } else {
@@ -89,7 +83,13 @@ const ProductWidget = () => {
         }
     };
 
-    const itemMenu = () => {
+    const getProductIdFromUrl = () => {
+        let productUrl = location.href;
+        let splittedUrl = productUrl.split('/');
+        return splittedUrl[splittedUrl.length - 1];
+    };
+
+    const itemMenu = (index: number) => {
         return (
             <DropdownMenu>
                 <DropdownMenu.Trigger asChild>
@@ -103,7 +103,7 @@ const ProductWidget = () => {
                         Edit
                     </DropdownMenu.Item>
                     <DropdownMenu.Separator />
-                    <DropdownMenu.Item className="gap-x-2" onClick={deleteDocument}>
+                    <DropdownMenu.Item className="gap-x-2" onClick={() => deleteDocument(index)}>
                         <Trash className="text-ui-fg-subtle" />
                         Delete
                     </DropdownMenu.Item>
@@ -194,34 +194,15 @@ const ProductWidget = () => {
                                 <Table.Cell>File Name</Table.Cell>
                                 <Table.Cell>Language</Table.Cell>
                                 <Table.Cell>Document Type</Table.Cell>
-                                <Table.Cell>Preview</Table.Cell>
+                                <Table.Cell>Actions</Table.Cell>
                             </Table.Row>
                             <Table.Body>
                                 {uploadedFiles.map((item, index) => (
                                     <Table.Row key={index}>
-                                        <Table.Cell>{item.file.name}</Table.Cell>
+                                        <Table.Cell>{item.fileName}</Table.Cell>
                                         <Table.Cell>{item.language}</Table.Cell>
                                         <Table.Cell>{item.documentType}</Table.Cell>
-                                        <Table.Cell>
-                                            {item.file.type.startsWith("image/") && (
-                                                <img 
-                                                    src={URL.createObjectURL(item.file)} 
-                                                    alt={item.file.name} 
-                                                    className="w-32 h-32 object-cover" 
-                                                />
-                                            )}
-                                            {item.file.type === "application/pdf" && (
-                                                <a 
-                                                    href={URL.createObjectURL(item.file)} 
-                                                    target="_blank" 
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-500"
-                                                >
-                                                    View PDF
-                                                </a>
-                                            )}
-                                        </Table.Cell>
-                                        <Table.Cell>{itemMenu()}</Table.Cell>
+                                        <Table.Cell>{itemMenu(index)}</Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>
