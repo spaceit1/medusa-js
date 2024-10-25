@@ -45,8 +45,36 @@ const ProductWidget = () => {
 
     };
 
-    const dropFromDB = (index: number) => {
-        // Implement your delete logic here
+    const dropFromDB = async (index: number) => {
+        
+        try{
+            let file_name = relatedFiles[index].file_name;
+            let id = relatedFiles[index].id;
+        
+            let response = await fetch('http://localhost:9000/product-documents/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: id,
+                    file_name: file_name,
+                }),
+            });
+
+            let result = await response.json();
+            console.log(result);
+
+            setUploadedFiles((prevFiles) => {
+                const updatedFiles = [...prevFiles];
+                updatedFiles.splice(index, 1);
+                return updatedFiles;
+            });
+
+        }catch(error){
+
+        }
+
     };
 
     useEffect(() => {
@@ -248,7 +276,7 @@ const ProductWidget = () => {
                             <Table.Body>
                                 {uploadedFiles.map((item, index) => (
                                     <Table.Row key={index}>
-                                        <Table.Cell>{item.fileName}</Table.Cell>
+                                        <Table.Cell id={`document-name-${index}`}>{item.fileName}</Table.Cell>
                                         <Table.Cell>{item.language}</Table.Cell>
                                         <Table.Cell>{item.documentType}</Table.Cell>
                                         <Table.Cell>{itemMenu(index,'uploaded')}</Table.Cell>
