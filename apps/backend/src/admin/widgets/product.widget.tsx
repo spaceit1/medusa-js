@@ -34,7 +34,7 @@ const ProductWidget = () => {
     const deleteDocument = (index: number, type: string) => {
         
         if(type == "related"){
-            dropFromDB(index);
+            dropFileFromDB(index);
         }else{
             setUploadedFiles((prevFiles) => {
                 const updatedFiles = [...prevFiles];
@@ -45,7 +45,7 @@ const ProductWidget = () => {
 
     };
 
-    const dropFromDB = async (index: number) => {
+    const dropFileFromDB = async (index: number) => {
         
         try{
             let file_name = relatedFiles[index].file_name;
@@ -72,7 +72,7 @@ const ProductWidget = () => {
             });
 
         }catch(error){
-
+            console.log({ Error: error });
         }
 
     };
