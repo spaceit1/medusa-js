@@ -1,13 +1,17 @@
 import { defineWidgetConfig } from "@medusajs/admin-sdk";
 import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } from "@medusajs/ui";
 import { EllipsisHorizontal, PencilSquare, Trash } from "@medusajs/icons";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const ProductWidget = () => {
+
     const [files, setFiles] = useState<File[]>([]);
     const [language, setLanguage] = useState<string>("");
     const [documentType, setDocumentType] = useState<string>("");
-    const [uploadedFiles, setUploadedFiles] = useState<Array<{ file: File, language: string, documentType: string }>>([]);
+    const [uploadedFiles, setUploadedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
+    const [relatedFiles, setRelatedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
+    
+    
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,14 +31,86 @@ const ProductWidget = () => {
         // Implement your edit logic here
     };
 
-    const deleteDocument = () => {
-        // Implement your delete logic here
+    const deleteDocument = (index: number, type: string) => {
+        
+        if(type == "related"){
+            dropFromDB(index);
+        }else{
+            setUploadedFiles((prevFiles) => {
+                const updatedFiles = [...prevFiles];
+                updatedFiles.splice(index, 1);
+                return updatedFiles;
+            }); 
+        }
+
     };
+
+    const dropFromDB = async (index: number) => {
+        
+        try{
+            let file_name = relatedFiles[index].file_name;
+            let id = relatedFiles[index].id;
+        
+            let response = await fetch('http://localhost:9000/product-documents/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: id,
+                    file_name: file_name,
+                }),
+            });
+
+            let result = await response.json();
+            console.log(result);
+
+            setRelatedFiles((prevFiles) => {
+                const updatedFiles = [...prevFiles];
+                updatedFiles.splice(index, 1);
+                return updatedFiles;
+            });
+
+        }catch(error){
+
+        }
+
+    };
+
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:9000/product-documents/get', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product_id: getProductIdFromUrl(),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            setRelatedFiles(result);
+            console.log(result);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData(); 
+    }, []); 
+
 
     const handleUpload = () => {
         if (files.length > 0 && language && documentType) {
             const newUploadedFiles = files.map(file => ({
-                file,
+                fileName: file.name,  // Zapisujemy tylko nazwę pliku
                 language,
                 documentType,
             }));
@@ -47,44 +123,51 @@ const ProductWidget = () => {
 
     const handleSave = async () => {
         if (uploadedFiles.length > 0) {
-            const formData = new FormData();
-
-            // Add files to FormData
-            uploadedFiles.forEach(item => {
-                formData.append('files', item.file); // Add files
-                formData.append('language', item.language); // Add language
-                formData.append('documentType', item.documentType); // Add document type
-            });
-
+            // Prepare JSON data to be sent
+            const dataToSend = {
+                product_id: getProductIdFromUrl(),
+                documents: uploadedFiles.map(item => ({
+                    file_name: item.fileName, // Zapisujemy tylko nazwę pliku
+                    language: item.language,
+                    document_type: item.documentType,
+                })),
+            };
+    
             try {
-                // Upload files to Medusa server
-                const response = await fetch('http://localhost:9000/files', {
+                // Upload data to Medusa server
+                const response = await fetch('http://localhost:9000/product-documents/upload', {
                     method: 'POST',
-                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/json', // Set content type to JSON
+                    },
+                    body: JSON.stringify(dataToSend), // Send JSON data
                 });
-
-                console.log(formData);
-
-                if (await response.ok) {
+    
+                if (response.ok) {
                     const result = await response.json();
-                    console.log('Files saved successfully:', result);
-
+                    console.log(result);
                     // Reset uploadedFiles after saving
                     setUploadedFiles([]);
+                    fetchData();
                 } else {
                     console.error('File save failed:', response.statusText);
-                    alert(`File save failed: ${response.statusText}`); // Notify user of failure
                 }
             } catch (error) {
                 console.error('Error saving files:', error);
-                alert(`Error saving files: ${error.message}`); // Notify user of error
             }
         } else {
             alert("No files to save.");
         }
     };
 
-    const itemMenu = () => {
+    const getProductIdFromUrl = () => {
+        let productUrl = location.href;
+        let splittedUrl = productUrl.split('/');
+        return splittedUrl[splittedUrl.length - 1];
+    };
+
+    const itemMenu = (index: number, type: string) => {
+
         return (
             <DropdownMenu>
                 <DropdownMenu.Trigger asChild>
@@ -93,12 +176,12 @@ const ProductWidget = () => {
                     </IconButton>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
-                    <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
+                {/* <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
                         <PencilSquare className="text-ui-fg-subtle" />
                         Edit
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Separator />
-                    <DropdownMenu.Item className="gap-x-2" onClick={deleteDocument}>
+                    </DropdownMenu.Item> */}
+                    {/* <DropdownMenu.Separator /> */}
+                    <DropdownMenu.Item className="gap-x-2" onClick={() => deleteDocument(index,type)}>
                         <Trash className="text-ui-fg-subtle" />
                         Delete
                     </DropdownMenu.Item>
@@ -180,50 +263,61 @@ const ProductWidget = () => {
                 </div>
             </div>
 
-            {/* File table */}
+        {uploadedFiles.length > 0 && (
             <div className="px-6 py-4">
-                {uploadedFiles.length > 0 && (
-                    <div>
+            <Heading level="h3">Uploaded Files</Heading>
+                <>
+                    <div>    
                         <Table>
                             <Table.Row>
                                 <Table.Cell>File Name</Table.Cell>
                                 <Table.Cell>Language</Table.Cell>
                                 <Table.Cell>Document Type</Table.Cell>
-                                <Table.Cell>Preview</Table.Cell>
+                                <Table.Cell>Actions</Table.Cell>
                             </Table.Row>
                             <Table.Body>
                                 {uploadedFiles.map((item, index) => (
                                     <Table.Row key={index}>
-                                        <Table.Cell>{item.file.name}</Table.Cell>
+                                        <Table.Cell id={`document-name-${index}`}>{item.fileName}</Table.Cell>
                                         <Table.Cell>{item.language}</Table.Cell>
                                         <Table.Cell>{item.documentType}</Table.Cell>
-                                        <Table.Cell>
-                                            {item.file.type.startsWith("image/") && (
-                                                <img 
-                                                    src={URL.createObjectURL(item.file)} 
-                                                    alt={item.file.name} 
-                                                    className="w-32 h-32 object-cover" 
-                                                />
-                                            )}
-                                            {item.file.type === "application/pdf" && (
-                                                <a 
-                                                    href={URL.createObjectURL(item.file)} 
-                                                    target="_blank" 
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-500"
-                                                >
-                                                    View PDF
-                                                </a>
-                                            )}
-                                        </Table.Cell>
-                                        <Table.Cell>{itemMenu()}</Table.Cell>
+                                        <Table.Cell>{itemMenu(index,'uploaded')}</Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>
                         </Table>
                     </div>
-                )}
+                </>
             </div>
+        )}
+
+        {relatedFiles.length > 0 && (
+            <div className="px-6 py-4">
+                <Heading level="h3">Related files</Heading>
+                <>
+                    <div>    
+                        <Table>
+                            <Table.Row>
+                                <Table.Cell>File Name</Table.Cell>
+                                <Table.Cell>Language</Table.Cell>
+                                <Table.Cell>Document Type</Table.Cell>
+                                <Table.Cell>Actions</Table.Cell>
+                            </Table.Row>
+                            <Table.Body>
+                                {relatedFiles.map((item:any, index) => (
+                                    <Table.Row key={index}>
+                                        <Table.Cell>{item.file_name}</Table.Cell>
+                                        <Table.Cell>{item.language}</Table.Cell>
+                                        <Table.Cell>{item.document_type}</Table.Cell>
+                                        <Table.Cell>{itemMenu(index,'related')}</Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
+                    </div>
+                </>
+            </div>
+         )}
         </Container>
     );
 };

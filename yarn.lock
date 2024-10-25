@@ -8243,7 +8243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/body-parser@npm:*":
+"@types/body-parser@npm:*, @types/body-parser@npm:^1":
   version: 1.19.5
   resolution: "@types/body-parser@npm:1.19.5"
   dependencies:
@@ -9713,7 +9713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"body-parser@npm:1.20.3":
+"body-parser@npm:1.20.3, body-parser@npm:^1.20.3":
   version: 1.20.3
   resolution: "body-parser@npm:1.20.3"
   dependencies:
@@ -14989,11 +14989,13 @@ __metadata:
     "@starter/types": "workspace:^"
     "@swc/core": "npm:1.5.7"
     "@swc/jest": "npm:^0.2.36"
+    "@types/body-parser": "npm:^1"
     "@types/formidable": "npm:^3"
     "@types/node": "npm:^20.0.0"
     "@types/react": "npm:^18.3.2"
     "@types/react-dom": "npm:^18.2.25"
     awilix: "npm:^8.0.1"
+    body-parser: "npm:^1.20.3"
     formidable: "npm:^3.5.2"
     jest: "npm:^29.7.0"
     pg: "npm:^8.13.0"

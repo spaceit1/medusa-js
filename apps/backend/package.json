@@ -34,6 +34,7 @@
     "@mikro-orm/postgresql": "5.9.7",
     "@starter/types": "workspace:^",
     "awilix": "^8.0.1",
+    "body-parser": "^1.20.3",
     "formidable": "^3.5.2",
     "pg": "^8.13.0",
     "zod": "3.22.4"
@@ -44,6 +45,7 @@
     "@mikro-orm/cli": "5.9.7",
     "@swc/core": "1.5.7",
     "@swc/jest": "^0.2.36",
+    "@types/body-parser": "^1",
     "@types/formidable": "^3",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.2",
