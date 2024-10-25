@@ -77,31 +77,32 @@ const ProductWidget = () => {
 
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:9000/product-documents/get', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        product_id: getProductIdFromUrl(),
-                    }),
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-    
-                const result = await response.json();
-                setRelatedFiles(result);
-                console.log(result);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:9000/product-documents/get', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product_id: getProductIdFromUrl(),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
-    
+
+            const result = await response.json();
+            setRelatedFiles(result);
+            console.log(result);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
         fetchData(); 
     }, []); 
 
@@ -147,6 +148,7 @@ const ProductWidget = () => {
                     console.log(result);
                     // Reset uploadedFiles after saving
                     setUploadedFiles([]);
+                    fetchData();
                 } else {
                     console.error('File save failed:', response.statusText);
                 }
