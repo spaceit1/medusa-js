@@ -31,8 +31,22 @@ const ProductWidget = () => {
         // Implement your edit logic here
     };
 
-    const deleteDocument = (index: number) => {
-        setUploadedFiles(uploadedFiles.filter((_, i) => i !== index)); // Remove file at index
+    const deleteDocument = (index: number, type: string) => {
+        
+        if(type == "related"){
+            dropFromDB(index);
+        }else{
+            setUploadedFiles((prevFiles) => {
+                const updatedFiles = [...prevFiles];
+                updatedFiles.splice(index, 1);
+                return updatedFiles;
+            }); 
+        }
+
+    };
+
+    const dropFromDB = (index: number) => {
+        // Implement your delete logic here
     };
 
     useEffect(() => {
@@ -124,12 +138,6 @@ const ProductWidget = () => {
 
     const itemMenu = (index: number, type: string) => {
 
-        // if(type == "related"){
-
-        // }else{
-
-        // } w zaleznosci od typu usuwamy na froncie albo na froncie i z bazy
-
         return (
             <DropdownMenu>
                 <DropdownMenu.Trigger asChild>
@@ -138,12 +146,12 @@ const ProductWidget = () => {
                     </IconButton>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
-                    <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
+                {/* <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
                         <PencilSquare className="text-ui-fg-subtle" />
                         Edit
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Separator />
-                    <DropdownMenu.Item className="gap-x-2" onClick={() => deleteDocument(index)}>
+                    </DropdownMenu.Item> */}
+                    {/* <DropdownMenu.Separator /> */}
+                    <DropdownMenu.Item className="gap-x-2" onClick={() => deleteDocument(index,type)}>
                         <Trash className="text-ui-fg-subtle" />
                         Delete
                     </DropdownMenu.Item>
@@ -252,6 +260,7 @@ const ProductWidget = () => {
                 </>
             </div>
         )}
+
         {relatedFiles.length > 0 && (
             <div className="px-6 py-4">
                 <Heading level="h3">Related files</Heading>
@@ -265,7 +274,7 @@ const ProductWidget = () => {
                                 <Table.Cell>Actions</Table.Cell>
                             </Table.Row>
                             <Table.Body>
-                                {relatedFiles.map((item, index) => (
+                                {relatedFiles.map((item:any, index) => (
                                     <Table.Row key={index}>
                                         <Table.Cell>{item.file_name}</Table.Cell>
                                         <Table.Cell>{item.language}</Table.Cell>
