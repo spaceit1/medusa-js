@@ -2,6 +2,8 @@ import { defineWidgetConfig } from "@medusajs/admin-sdk";
 import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } from "@medusajs/ui";
 import { EllipsisHorizontal, PencilSquare, Trash, ComputerDesktop, MagnifyingGlass, CloudArrowUp, CheckMini } from "@medusajs/icons";
 import { useState, useRef, useEffect } from "react";
+import { FileModal } from "../components/custom/file-modal";
+import { FocusModal, Input, Label, Text } from "@medusajs/ui"
 
 const ProductWidget = () => {
 
@@ -44,12 +46,6 @@ const ProductWidget = () => {
         }
 
     };
-
-    const showAllFilesModal = () => {
-
-
-
-    }
 
     const dropFileFromDB = async (index: number) => {
         
@@ -196,6 +192,40 @@ const ProductWidget = () => {
         );
     };
 
+
+    const Modal = () => {
+        return (
+            <FocusModal>
+              <FocusModal.Trigger asChild>
+                <Button variant="secondary"><MagnifyingGlass />Find files</Button>
+              </FocusModal.Trigger>
+              <FocusModal.Content>
+                <FocusModal.Header>
+                  <Button>Save</Button>
+                </FocusModal.Header>
+                <FocusModal.Body className="flex flex-col items-center py-16">
+                  <div className="flex w-full max-w-lg flex-col gap-y-8">
+                    <div className="flex flex-col gap-y-1">
+                      <Heading>Create API key</Heading>
+                      <Text className="text-ui-fg-subtle">
+                        Create and manage API keys. You can create multiple keys to
+                        organize your applications.
+                      </Text>
+                    </div>
+                    <div className="flex flex-col gap-y-2">
+                      <Label htmlFor="key_name" className="text-ui-fg-subtle">
+                        Key name
+                      </Label>
+                      <Input id="key_name" placeholder="my_app" />
+                    </div>
+                  </div>
+                </FocusModal.Body>
+              </FocusModal.Content>
+            </FocusModal>
+          )
+    }
+
+
     return (
         <Container className="divide-y p-0">
             <div className="flex items-center justify-between px-6 py-4">
@@ -206,7 +236,7 @@ const ProductWidget = () => {
             <div className="px-6 py-4">
                 <div className="flex flex-row gap-5">
                     <Button variant="secondary" onClick={handleButtonClick}><ComputerDesktop />Choose Files</Button>
-                    <Button variant="secondary" onClick={showAllFilesModal}><MagnifyingGlass />Find files</Button>
+                    <Modal />
                 </div>
                 <input 
                     ref={fileInputRef}
