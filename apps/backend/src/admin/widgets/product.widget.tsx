@@ -1,13 +1,17 @@
 import { defineWidgetConfig } from "@medusajs/admin-sdk";
 import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } from "@medusajs/ui";
 import { EllipsisHorizontal, PencilSquare, Trash } from "@medusajs/icons";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const ProductWidget = () => {
+
     const [files, setFiles] = useState<File[]>([]);
     const [language, setLanguage] = useState<string>("");
     const [documentType, setDocumentType] = useState<string>("");
     const [uploadedFiles, setUploadedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
+    const [relatedFiles, setRelatedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
+    
+    
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,6 +34,35 @@ const ProductWidget = () => {
     const deleteDocument = (index: number) => {
         setUploadedFiles(uploadedFiles.filter((_, i) => i !== index)); // Remove file at index
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:9000/product-documents/get', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        product_id: getProductIdFromUrl(),
+                    }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const result = await response.json();
+                setRelatedFiles(result);
+                console.log(result);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+    
+        fetchData(); 
+    }, []); 
+
 
     const handleUpload = () => {
         if (files.length > 0 && language && documentType) {
@@ -89,7 +122,14 @@ const ProductWidget = () => {
         return splittedUrl[splittedUrl.length - 1];
     };
 
-    const itemMenu = (index: number) => {
+    const itemMenu = (index: number, type: string) => {
+
+        // if(type == "related"){
+
+        // }else{
+
+        // } w zaleznosci od typu usuwamy na froncie albo na froncie i z bazy
+
         return (
             <DropdownMenu>
                 <DropdownMenu.Trigger asChild>
@@ -203,7 +243,7 @@ const ProductWidget = () => {
                                         <Table.Cell>{item.fileName}</Table.Cell>
                                         <Table.Cell>{item.language}</Table.Cell>
                                         <Table.Cell>{item.documentType}</Table.Cell>
-                                        <Table.Cell>{itemMenu(index)}</Table.Cell>
+                                        <Table.Cell>{itemMenu(index,'uploaded')}</Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>
@@ -212,7 +252,7 @@ const ProductWidget = () => {
                 </>
             </div>
         )}
-        {uploadedFiles.length > 0 && (
+        {relatedFiles.length > 0 && (
             <div className="px-6 py-4">
                 <Heading level="h3">Related files</Heading>
                 <>
@@ -225,12 +265,12 @@ const ProductWidget = () => {
                                 <Table.Cell>Actions</Table.Cell>
                             </Table.Row>
                             <Table.Body>
-                                {uploadedFiles.map((item, index) => (
+                                {relatedFiles.map((item, index) => (
                                     <Table.Row key={index}>
-                                        <Table.Cell>{item.fileName}</Table.Cell>
+                                        <Table.Cell>{item.file_name}</Table.Cell>
                                         <Table.Cell>{item.language}</Table.Cell>
-                                        <Table.Cell>{item.documentType}</Table.Cell>
-                                        <Table.Cell>{itemMenu(index)}</Table.Cell>
+                                        <Table.Cell>{item.document_type}</Table.Cell>
+                                        <Table.Cell>{itemMenu(index,'related')}</Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>
