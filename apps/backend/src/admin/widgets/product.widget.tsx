@@ -65,7 +65,7 @@ const ProductWidget = () => {
             let result = await response.json();
             console.log(result);
 
-            setUploadedFiles((prevFiles) => {
+            setRelatedFiles((prevFiles) => {
                 const updatedFiles = [...prevFiles];
                 updatedFiles.splice(index, 1);
                 return updatedFiles;
