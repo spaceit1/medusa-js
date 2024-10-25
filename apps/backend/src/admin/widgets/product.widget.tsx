@@ -1,6 +1,6 @@
 import { defineWidgetConfig } from "@medusajs/admin-sdk";
 import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } from "@medusajs/ui";
-import { EllipsisHorizontal, PencilSquare, Trash } from "@medusajs/icons";
+import { EllipsisHorizontal, PencilSquare, Trash, ComputerDesktop, MagnifyingGlass, CloudArrowUp, CheckMini } from "@medusajs/icons";
 import { useState, useRef, useEffect } from "react";
 
 const ProductWidget = () => {
@@ -45,9 +45,16 @@ const ProductWidget = () => {
 
     };
 
+    const showAllFilesModal = () => {
+
+
+
+    }
+
     const dropFileFromDB = async (index: number) => {
         
         try{
+
             let file_name = relatedFiles[index].file_name;
             let id = relatedFiles[index].id;
         
@@ -197,7 +204,10 @@ const ProductWidget = () => {
 
             {/* File upload section */}
             <div className="px-6 py-4">
-                <Button variant="secondary" onClick={handleButtonClick}>Choose Files</Button>
+                <div className="flex flex-row gap-5">
+                    <Button variant="secondary" onClick={handleButtonClick}><ComputerDesktop />Choose Files</Button>
+                    <Button variant="secondary" onClick={showAllFilesModal}><MagnifyingGlass />Find files</Button>
+                </div>
                 <input 
                     ref={fileInputRef}
                     type="file" 
@@ -248,17 +258,13 @@ const ProductWidget = () => {
                 </div>
                 <div className="flex flex-row gap-5">
                     <Button 
-                        variant="primary" 
+                        variant="secondary" 
                         onClick={handleUpload}
                     >
+                        <CloudArrowUp />
                         Upload
                     </Button>
-                    <Button 
-                        variant="primary" 
-                        onClick={handleSave}
-                    >
-                        Save
-                    </Button>
+                    
                 </div>
             </div>
 
@@ -317,7 +323,16 @@ const ProductWidget = () => {
                 </>
             </div>
          )}
+            <div className="px-6 py-4">
+                <Button 
+                    variant="primary" 
+                    onClick={handleSave}>
+                    <CheckMini />
+                Save
+                </Button>
+            </div>
         </Container>
+        
     );
 };
 
