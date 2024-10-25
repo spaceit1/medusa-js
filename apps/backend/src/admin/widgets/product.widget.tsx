@@ -185,10 +185,11 @@ const ProductWidget = () => {
                 </div>
             </div>
 
-            {/* File table */}
+        {uploadedFiles.length > 0 && (
             <div className="px-6 py-4">
-                {uploadedFiles.length > 0 && (
-                    <div>
+            <Heading level="h3">Uploaded Files</Heading>
+                <>
+                    <div>    
                         <Table>
                             <Table.Row>
                                 <Table.Cell>File Name</Table.Cell>
@@ -208,8 +209,36 @@ const ProductWidget = () => {
                             </Table.Body>
                         </Table>
                     </div>
-                )}
+                </>
             </div>
+        )}
+        {uploadedFiles.length > 0 && (
+            <div className="px-6 py-4">
+                <Heading level="h3">Related files</Heading>
+                <>
+                    <div>    
+                        <Table>
+                            <Table.Row>
+                                <Table.Cell>File Name</Table.Cell>
+                                <Table.Cell>Language</Table.Cell>
+                                <Table.Cell>Document Type</Table.Cell>
+                                <Table.Cell>Actions</Table.Cell>
+                            </Table.Row>
+                            <Table.Body>
+                                {uploadedFiles.map((item, index) => (
+                                    <Table.Row key={index}>
+                                        <Table.Cell>{item.fileName}</Table.Cell>
+                                        <Table.Cell>{item.language}</Table.Cell>
+                                        <Table.Cell>{item.documentType}</Table.Cell>
+                                        <Table.Cell>{itemMenu(index)}</Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
+                    </div>
+                </>
+            </div>
+         )}
         </Container>
     );
 };
