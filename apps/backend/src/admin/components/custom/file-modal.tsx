@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Button, Table } from "@medusajs/ui";
+import { Checkbox, Button, Table, Input } from "@medusajs/ui";
 import { Skeleton } from "../common/skeleton";
 
 interface FileModalProps {
@@ -62,32 +62,38 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                 <Skeleton className="loading" />
             ) : (
                 <>
-                    <Table>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell></Table.HeaderCell>
-                                <Table.HeaderCell>File Name</Table.HeaderCell>
-                                <Table.HeaderCell>Language</Table.HeaderCell>
-                                <Table.HeaderCell>Document Type</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            {rows.map((row) => (
-                                <Table.Row key={row.id}>
-                                    <Table.Cell>
-                                        <Checkbox
-                                            onCheckedChange={() => toggleSelectRow(row.id)}
-                                            aria-label={`Select ${row.file_name}`}
-                                            checked={!!selectedRows[row.id]}
-                                        />
-                                    </Table.Cell>
-                                    <Table.Cell>{row.file_name}</Table.Cell>
-                                    <Table.Cell>{row.language}</Table.Cell>
-                                    <Table.Cell>{row.document_type}</Table.Cell>
+
+        
+            <Input className="w-[200px] absolute top-[0px]" placeholder="Start typing ..." id="files-search-bar" />
+
+                    <div style={{ width: '100%', maxHeight: '58%', overflowY: 'auto' }}> {/* Kontener scrollowalny */}
+                        <Table>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell></Table.HeaderCell>
+                                    <Table.HeaderCell>File Name</Table.HeaderCell>
+                                    <Table.HeaderCell>Language</Table.HeaderCell>
+                                    <Table.HeaderCell>Document Type</Table.HeaderCell>
                                 </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
+                            </Table.Header>
+                            <Table.Body>
+                                {rows.map((row) => (
+                                    <Table.Row key={row.id}>
+                                        <Table.Cell>
+                                            <Checkbox
+                                                onCheckedChange={() => toggleSelectRow(row.id)}
+                                                aria-label={`Select ${row.file_name}`}
+                                                checked={!!selectedRows[row.id]}
+                                            />
+                                        </Table.Cell>
+                                        <Table.Cell>{row.file_name}</Table.Cell>
+                                        <Table.Cell>{row.language}</Table.Cell>
+                                        <Table.Cell>{row.document_type}</Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
+                    </div>
                     <Button className='absolute top-[6px] right-[20px]' onClick={handleConfirm}>Save</Button>
                 </>
             )}

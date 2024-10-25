@@ -195,7 +195,7 @@ const ProductWidget = () => {
                     <FocusModal.Header>
                         {/* <Button id='SaveFileButton' onClick={() => handleFileSelection(selectedFiles)}>Save</Button> */}
                     </FocusModal.Header>
-                    <FocusModal.Body className="flex flex-col items-center py-16">
+                    <FocusModal.Body className="flex flex-col items-center py-10">
                         <FileModal onClose={() => setModalOpen(false)} setSelectedFiles={handleFileSelection} />
                     </FocusModal.Body>
                 </FocusModal.Content>
