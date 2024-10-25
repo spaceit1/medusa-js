@@ -3,18 +3,17 @@ import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } f
 import { EllipsisHorizontal, PencilSquare, Trash, ComputerDesktop, MagnifyingGlass, CloudArrowUp, CheckMini } from "@medusajs/icons";
 import { useState, useRef, useEffect } from "react";
 import { FileModal } from "../components/custom/file-modal";
-import { FocusModal, Input, Label, Text } from "@medusajs/ui"
+import { FocusModal } from "@medusajs/ui";
 
 const ProductWidget = () => {
-
     const [files, setFiles] = useState<File[]>([]);
     const [language, setLanguage] = useState<string>("");
     const [documentType, setDocumentType] = useState<string>("");
     const [uploadedFiles, setUploadedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
     const [relatedFiles, setRelatedFiles] = useState<Array<{ id:number | string, file_name: string, language: string, document_type: string }>>([]);
+    const [selectedFiles, setSelectedFiles] = useState<Array<{ file_name: string, language: string, document_type: string }>>([]); // State for selected files
+    const [modalOpen, setModalOpen] = useState(false); // State to manage modal visibility
     
-    
-
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,26 +33,22 @@ const ProductWidget = () => {
     };
 
     const deleteDocument = (index: number, type: string) => {
-        
-        if(type == "related"){
+        if (type === "related") {
             dropFileFromDB(index);
-        }else{
+        } else {
             setUploadedFiles((prevFiles) => {
                 const updatedFiles = [...prevFiles];
                 updatedFiles.splice(index, 1);
                 return updatedFiles;
-            }); 
+            });
         }
-
     };
 
     const dropFileFromDB = async (index: number) => {
-        
-        try{
-
+        try {
             let file_name = relatedFiles[index].file_name;
             let id = relatedFiles[index].id;
-        
+
             let response = await fetch('http://localhost:9000/product-documents/delete', {
                 method: 'POST',
                 headers: {
@@ -74,12 +69,10 @@ const ProductWidget = () => {
                 return updatedFiles;
             });
 
-        }catch(error){
+        } catch (error) {
             console.log({ Error: error });
         }
-
     };
-
 
     const fetchData = async () => {
         try {
@@ -109,11 +102,10 @@ const ProductWidget = () => {
         fetchData(); 
     }, []); 
 
-
     const handleUpload = () => {
         if (files.length > 0 && language && documentType) {
             const newUploadedFiles = files.map(file => ({
-                fileName: file.name,  // Zapisujemy tylko nazwę pliku
+                fileName: file.name,
                 language,
                 documentType,
             }));
@@ -126,29 +118,26 @@ const ProductWidget = () => {
 
     const handleSave = async () => {
         if (uploadedFiles.length > 0) {
-            // Prepare JSON data to be sent
             const dataToSend = {
                 product_id: getProductIdFromUrl(),
                 documents: uploadedFiles.map(item => ({
-                    file_name: item.fileName, // Zapisujemy tylko nazwę pliku
+                    file_name: item.fileName,
                     language: item.language,
                     document_type: item.documentType,
                 })),
             };
-    
+
             try {
-                // Upload data to Medusa server
                 const response = await fetch('http://localhost:9000/product-documents/upload', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json', // Set content type to JSON
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(dataToSend), // Send JSON data
+                    body: JSON.stringify(dataToSend),
                 });
-    
+
                 if (response.ok) {
                     const result = await response.json();
-                    //console.log(result);
                     setUploadedFiles([]);
                     fetchData();
                 } else {
@@ -169,7 +158,6 @@ const ProductWidget = () => {
     };
 
     const itemMenu = (index: number, type: string) => {
-
         return (
             <DropdownMenu>
                 <DropdownMenu.Trigger asChild>
@@ -178,7 +166,7 @@ const ProductWidget = () => {
                     </IconButton>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
-                {/* <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
+                    {/* <DropdownMenu.Item className="gap-x-2" onClick={editDocument}>
                         <PencilSquare className="text-ui-fg-subtle" />
                         Edit
                     </DropdownMenu.Item> */}
@@ -192,25 +180,28 @@ const ProductWidget = () => {
         );
     };
 
+    const handleFileSelection = (selectedFiles: Array<{ file_name: string, language: string, document_type: string }>) => {
+        setSelectedFiles(selectedFiles); // Set the selected files from the modal
+        setModalOpen(false); // Close the modal
+    };
 
     const Modal = () => {
         return (
-            <FocusModal>
-              <FocusModal.Trigger asChild>
-                <Button variant="secondary"><MagnifyingGlass />Find files</Button>
-              </FocusModal.Trigger>
-              <FocusModal.Content>
-                <FocusModal.Header>
-                  <Button>Save</Button>
-                </FocusModal.Header>
-                <FocusModal.Body className="flex flex-col items-center py-16">
-                  <FileModal />
-                </FocusModal.Body>
-              </FocusModal.Content>
+            <FocusModal open={modalOpen} onOpenChange={setModalOpen}>
+                <FocusModal.Trigger asChild>
+                    <Button variant="secondary"><MagnifyingGlass />Find files</Button>
+                </FocusModal.Trigger>
+                <FocusModal.Content>
+                    <FocusModal.Header>
+                        <Button id='SaveFileButton' onClick={() => handleFileSelection(selectedFiles)}>Save</Button>
+                    </FocusModal.Header>
+                    <FocusModal.Body className="flex flex-col items-center py-16">
+                        <FileModal onClose={() => setModalOpen(false)} setSelectedFiles={handleFileSelection} />
+                    </FocusModal.Body>
+                </FocusModal.Content>
             </FocusModal>
-          )
+        )
     }
-
 
     return (
         <Container className="divide-y p-0">
@@ -280,14 +271,12 @@ const ProductWidget = () => {
                         <CloudArrowUp />
                         Upload
                     </Button>
-                    
                 </div>
             </div>
 
-        {uploadedFiles.length > 0 && (
-            <div className="px-6 py-4">
-            <Heading level="h3">Uploaded Files</Heading>
-                <>
+            {uploadedFiles.length > 0 && (
+                <div className="px-6 py-4">
+                    <Heading level="h3">Uploaded Files</Heading>
                     <div>    
                         <Table>
                             <Table.Row>
@@ -308,14 +297,12 @@ const ProductWidget = () => {
                             </Table.Body>
                         </Table>
                     </div>
-                </>
-            </div>
-        )}
+                </div>
+            )}
 
-        {relatedFiles.length > 0 && (
-            <div className="px-6 py-4">
-                <Heading level="h3">Related files</Heading>
-                <>
+            {relatedFiles.length > 0 && (
+                <div className="px-6 py-4">
+                    <Heading level="h3">Related files</Heading>
                     <div>    
                         <Table>
                             <Table.Row>
@@ -336,19 +323,17 @@ const ProductWidget = () => {
                             </Table.Body>
                         </Table>
                     </div>
-                </>
-            </div>
-         )}
+                </div>
+            )}
             <div className="px-6 py-4">
                 <Button 
                     variant="primary" 
                     onClick={handleSave}>
                     <CheckMini />
-                Save
+                    Save
                 </Button>
             </div>
         </Container>
-        
     );
 };
 
