@@ -9,7 +9,7 @@ const ProductWidget = () => {
     const [language, setLanguage] = useState<string>("");
     const [documentType, setDocumentType] = useState<string>("");
     const [uploadedFiles, setUploadedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
-    const [relatedFiles, setRelatedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
+    const [relatedFiles, setRelatedFiles] = useState<Array<{ id:number | string, file_name: string, language: string, document_type: string }>>([]);
     
     
 
@@ -145,8 +145,7 @@ const ProductWidget = () => {
     
                 if (response.ok) {
                     const result = await response.json();
-                    console.log(result);
-                    // Reset uploadedFiles after saving
+                    //console.log(result);
                     setUploadedFiles([]);
                     fetchData();
                 } else {
