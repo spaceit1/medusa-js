@@ -1,9 +1,9 @@
-"use client"
-
+'use client'
 import { HttpTypes } from "@medusajs/types"
 import { Table, Text } from "@medusajs/ui"
 import Markdown from "react-markdown"
 import Accordion from "./accordion"
+
 
 type ProductTabsProps = {
   product: HttpTypes.StoreProduct
@@ -19,6 +19,10 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
       label: "Specifications",
       component: <ProductSpecificationsTab product={product} />,
     },
+    {
+      label: "Documents",
+      component: <ProductDocumentsTab product={product} />
+    }
   ]
 
   return (
@@ -63,6 +67,34 @@ const ProductSpecsTab = ({ product }: ProductTabsProps) => {
     </div>
   )
 }
+
+const fetchDocuments = async (productId: string) => {
+
+  const response = await fetch(`http://localhost:9000/product-documents/get`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ product_id: productId }),
+  });
+
+  const data = await response.json();
+  console.log(response);
+  
+}
+
+const ProductDocumentsTab = ({ product }: ProductTabsProps) => {
+
+  console.log(product);
+  console.log(product.id);
+  
+  return(
+  <>
+    <h1>{product.id}</h1>
+    <span>Tutaj pojawi sie lista dokumentow</span>
+  </>
+  )
+};
 
 const ProductSpecificationsTab = ({ product }: ProductTabsProps) => {
   return (

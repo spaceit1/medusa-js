@@ -2,14 +2,12 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
 
-// Load environment variables from .env file
 dotenv.config();
-// Initialize PostgreSQL connection pool
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, // Ensure this environment variable is set
+    connectionString: process.env.DATABASE_URL, 
 });
 
-// Handle POST request
 export const POST = async (req: any, res: any) => {
     
     try {

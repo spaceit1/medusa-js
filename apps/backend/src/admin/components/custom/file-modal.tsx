@@ -13,7 +13,6 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
     const [selectedRows, setSelectedRows] = useState<Record<number | string, boolean>>({});
     const [searchTerm, setSearchTerm] = useState("");
     
-    // Stany dla checkboxów filtrujących po typie dokumentu
     const [showInstruction, setShowInstruction] = useState(false);
     const [showCertificate, setShowCertificate] = useState(false);
     const [showComplianceCard, setShowComplianceCard] = useState(false);
@@ -91,7 +90,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             toast.info("Data saved successfully.", {
                 description: "Documents have been added to the database.",
             });
-            
+
         } catch (error) {
             console.error("Error saving data in database:", error);
             toast.error("Failed to save data.", {
@@ -162,7 +161,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                         </div>
                     </div>
 
-                    <div style={{ width: '100%', maxHeight: '58%', overflowY: 'auto' }}>
+                    <div style={{ width: '100%', maxHeight: '80%', overflowY: 'auto' }}>
                         <Table>
                             <Table.Header>
                                 <Table.Row>
