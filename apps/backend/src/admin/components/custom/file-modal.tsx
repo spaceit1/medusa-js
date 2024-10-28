@@ -11,6 +11,13 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
     const [isLoading, setIsLoading] = useState(true);
     const [rows, setRows] = useState<Array<{ id: number | string; file_name: string; language: string; document_type: string }>>([]);
     const [selectedRows, setSelectedRows] = useState<Record<number | string, boolean>>({});
+    const [searchTerm, setSearchTerm] = useState("");
+    
+    // Stany dla checkboxów filtrujących po typie dokumentu
+    const [showInstruction, setShowInstruction] = useState(false);
+    const [showCertificate, setShowCertificate] = useState(false);
+    const [showComplianceCard, setShowComplianceCard] = useState(false);
+    const [showOther, setShowOther] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -56,17 +63,69 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
         onClose(); 
     };
 
+    // Filtrowanie wierszy na podstawie `searchTerm` i zaznaczonych checkboxów typu dokumentu
+    const filteredRows = rows.filter(row => {
+        const matchesSearchTerm = row.file_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            row.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            row.document_type.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        const matchesDocumentType = (
+            (!showInstruction && !showCertificate && !showComplianceCard && !showOther) || // Brak zaznaczonego checkboxa oznacza wyświetlenie wszystkich
+            (showInstruction && row.document_type === "instruction") ||
+            (showCertificate && row.document_type === "certificate") ||
+            (showComplianceCard && row.document_type === "compliance_card") ||
+            (showOther && row.document_type === "other")
+        );
+
+        return matchesSearchTerm && matchesDocumentType;
+    });
+
     return (
         <>
             {isLoading ? (
                 <Skeleton className="loading" />
             ) : (
                 <>
+                    <div className="absolute left-[70px] top-[57px] flex flex-row gap-10 items-center">
+                        <Input
+                            className="w-[300px]"
+                            placeholder="Start typing ..."
+                            id="files-search-bar"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        
+                        <div className="flex flex-row gap-2 items-center">
+                            <Checkbox
+                                checked={showInstruction}
+                                onCheckedChange={() => setShowInstruction(prev => !prev)}
+                            />
+                            <span>instruction</span>
+                        </div>
+                        <div className="flex flex-row gap-2 items-center">
+                            <Checkbox
+                                checked={showCertificate}
+                                onCheckedChange={() => setShowCertificate(prev => !prev)}
+                            />
+                            <span>certificate</span>
+                        </div>
+                        <div className="flex flex-row gap-2 items-center">
+                            <Checkbox
+                                checked={showComplianceCard}
+                                onCheckedChange={() => setShowComplianceCard(prev => !prev)}
+                            />
+                            <span>compliance card</span>
+                        </div>
+                        <div className="flex flex-row gap-2 items-center">
+                            <Checkbox
+                                checked={showOther}
+                                onCheckedChange={() => setShowOther(prev => !prev)}
+                            />
+                            <span>other</span>
+                        </div>
+                    </div>
 
-        
-            <Input className="w-[200px] absolute top-[0px]" placeholder="Start typing ..." id="files-search-bar" />
-
-                    <div style={{ width: '100%', maxHeight: '58%', overflowY: 'auto' }}> {/* Kontener scrollowalny */}
+                    <div style={{ width: '100%', maxHeight: '58%', overflowY: 'auto' }}>
                         <Table>
                             <Table.Header>
                                 <Table.Row>
@@ -77,7 +136,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>
-                                {rows.map((row) => (
+                                {filteredRows.map((row) => (
                                     <Table.Row key={row.id}>
                                         <Table.Cell>
                                             <Checkbox
