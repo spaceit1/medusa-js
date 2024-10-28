@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Button, Table, Input, Toaster, toast} from "@medusajs/ui";
+import { Checkbox, Button, Table, Input, Toaster, toast, Select} from "@medusajs/ui";
 import { Skeleton } from "../common/skeleton";
 
 interface FileModalProps {
@@ -12,11 +12,18 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
     const [rows, setRows] = useState<Array<{ id: number | string; file_name: string; language: string; document_type: string }>>([]);
     const [selectedRows, setSelectedRows] = useState<Record<number | string, boolean>>({});
     const [searchTerm, setSearchTerm] = useState("");
+    const [languages, setLanguages] = useState<Language[]>([]);
+
     
     const [showInstruction, setShowInstruction] = useState(false);
     const [showCertificate, setShowCertificate] = useState(false);
     const [showComplianceCard, setShowComplianceCard] = useState(false);
     const [showOther, setShowOther] = useState(false);
+
+    type Language = {
+        label: string;
+        value: string;
+    };
 
     useEffect(() => {
         fetchData();
@@ -31,7 +38,14 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                 },
             });
             const data = await response.json();
+    
+            // Create a Set to remove duplicates
+            const uniqueLanguages:any = Array.from(new Set(data.map(row => row.language)))
+                .map(lang => ({ label: lang, value: lang }));
+    
+            setLanguages(uniqueLanguages);
             setRows(data);
+    
             const initialSelectionState = data.reduce((acc: Record<number | string, boolean>, row: { id: number | string }) => {
                 acc[row.id] = false;
                 return acc;
@@ -43,6 +57,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             setIsLoading(false);
         }
     };
+    
 
     const toggleSelectRow = (id: number | string) => {
         setSelectedRows((prev) => ({
@@ -57,7 +72,9 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             language: row.language,
             document_type: row.document_type,
         }));
+
         //console.log("Wybrane pliki:", selectedFiles);
+
         setSelectedFiles(selectedFiles);
         let productId = getProductIdFromUrl();
         saveDataInDatabase(selectedFiles, productId);
@@ -115,6 +132,9 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
         return matchesSearchTerm && matchesDocumentType;
     });
 
+
+    
+
     return (
         <>
             {isLoading ? (
@@ -159,6 +179,20 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                             />
                             <span>other</span>
                         </div>
+                        <div className="flex flex-row gap-2 items-center w-[100px]">
+                        <Select >
+                            <Select.Trigger>
+                                <Select.Value placeholder="Select a language" />
+                            </Select.Trigger>
+                                <Select.Content>
+                                    {languages.map((item) => (
+                                    <Select.Item key={item.value} value={item.value}>
+                                        {item.label}
+                                    </Select.Item>
+                                    ))}
+                                </Select.Content>
+                        </Select>
+                        </div>            
                     </div>
 
                     <div style={{ width: '100%', maxHeight: '80%', overflowY: 'auto' }}>
