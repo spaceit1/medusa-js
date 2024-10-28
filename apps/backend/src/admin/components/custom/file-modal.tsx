@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Button, Table, Input, Toaster, toast, Select} from "@medusajs/ui";
+import { Checkbox, Button, Table, Input, Toaster, toast, Select } from "@medusajs/ui";
 import { Skeleton } from "../common/skeleton";
 
 interface FileModalProps {
@@ -13,8 +13,8 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
     const [selectedRows, setSelectedRows] = useState<Record<number | string, boolean>>({});
     const [searchTerm, setSearchTerm] = useState("");
     const [languages, setLanguages] = useState<Language[]>([]);
+    const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null); // State for selected language
 
-    
     const [showInstruction, setShowInstruction] = useState(false);
     const [showCertificate, setShowCertificate] = useState(false);
     const [showComplianceCard, setShowComplianceCard] = useState(false);
@@ -58,7 +58,6 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
         }
     };
     
-
     const toggleSelectRow = (id: number | string) => {
         setSelectedRows((prev) => ({
             ...prev,
@@ -72,8 +71,6 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             language: row.language,
             document_type: row.document_type,
         }));
-
-        //console.log("Wybrane pliki:", selectedFiles);
 
         setSelectedFiles(selectedFiles);
         let productId = getProductIdFromUrl();
@@ -129,11 +126,10 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             (showOther && row.document_type === "other")
         );
 
-        return matchesSearchTerm && matchesDocumentType;
+        const matchesLanguage = selectedLanguage ? row.language === selectedLanguage : true; // Filter by selected language
+
+        return matchesSearchTerm && matchesDocumentType && matchesLanguage; // Include language in filtering
     });
-
-
-    
 
     return (
         <>
@@ -179,18 +175,18 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                             />
                             <span>other</span>
                         </div>
-                        <div className="flex flex-row gap-2 items-center w-[100px]">
-                        <Select >
+                        <div className="flex flex-row gap-2 items-center w-[175px]">
+                        <Select onValueChange={(value) => setSelectedLanguage(value)}>
                             <Select.Trigger>
                                 <Select.Value placeholder="Select a language" />
                             </Select.Trigger>
-                                <Select.Content>
-                                    {languages.map((item) => (
+                            <Select.Content>
+                                {languages.map((item) => (
                                     <Select.Item key={item.value} value={item.value}>
                                         {item.label}
                                     </Select.Item>
-                                    ))}
-                                </Select.Content>
+                                ))}
+                            </Select.Content>
                         </Select>
                         </div>            
                     </div>
