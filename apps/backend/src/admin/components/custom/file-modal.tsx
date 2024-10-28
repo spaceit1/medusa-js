@@ -40,12 +40,12 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             const data = await response.json();
     
             // Create a Set to remove duplicates
-            const uniqueLanguages:any = Array.from(new Set(data.map(row => row.language)))
+            const uniqueLanguages: any = Array.from(new Set(data.map(row => row.language)))
                 .map(lang => ({ label: lang, value: lang }));
     
             setLanguages(uniqueLanguages);
             setRows(data);
-    
+            
             const initialSelectionState = data.reduce((acc: Record<number | string, boolean>, row: { id: number | string }) => {
                 acc[row.id] = false;
                 return acc;
@@ -146,7 +146,28 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        
+                        <div className="flex flex-row gap-2 items-center w-[175px]">
+                            <Select onValueChange={(value) => {
+                                // Check if the value is 'clear'
+                                if (value === "clear") {
+                                    setSelectedLanguage(null); // Reset selected language
+                                } else {
+                                    setSelectedLanguage(value); // Set selected language
+                                }
+                            }}>
+                                <Select.Trigger>
+                                    <Select.Value placeholder="Select a language" />
+                                </Select.Trigger>
+                                <Select.Content>
+                                    <Select.Item value="clear">Clear Selection</Select.Item> {/* Clear Option */}
+                                    {languages.map((item) => (
+                                        <Select.Item key={item.value} value={item.value}>
+                                            {item.label}
+                                        </Select.Item>
+                                    ))}
+                                </Select.Content>
+                            </Select>
+                        </div>    
                         <div className="flex flex-row gap-2 items-center">
                             <Checkbox
                                 checked={showInstruction}
@@ -175,23 +196,9 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                             />
                             <span>other</span>
                         </div>
-                        <div className="flex flex-row gap-2 items-center w-[175px]">
-                        <Select onValueChange={(value) => setSelectedLanguage(value)}>
-                            <Select.Trigger>
-                                <Select.Value placeholder="Select a language" />
-                            </Select.Trigger>
-                            <Select.Content>
-                                {languages.map((item) => (
-                                    <Select.Item key={item.value} value={item.value}>
-                                        {item.label}
-                                    </Select.Item>
-                                ))}
-                            </Select.Content>
-                        </Select>
-                        </div>            
                     </div>
 
-                    <div style={{ width: '100%', maxHeight: '80%', overflowY: 'auto' }}>
+                    <div style={{ width: '100%', maxHeight: '80vh', paddingBottom: '2=50px', overflowY: 'auto' }}>
                         <Table>
                             <Table.Header>
                                 <Table.Row>
