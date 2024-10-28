@@ -126,9 +126,9 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             (showOther && row.document_type === "other")
         );
 
-        const matchesLanguage = selectedLanguage ? row.language === selectedLanguage : true; // Filter by selected language
+        const matchesLanguage = selectedLanguage ? row.language === selectedLanguage : true; 
 
-        return matchesSearchTerm && matchesDocumentType && matchesLanguage; // Include language in filtering
+        return matchesSearchTerm && matchesDocumentType && matchesLanguage; 
     });
 
     return (
@@ -148,18 +148,17 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                         />
                         <div className="flex flex-row gap-2 items-center w-[175px]">
                             <Select onValueChange={(value) => {
-                                // Check if the value is 'clear'
                                 if (value === "clear") {
-                                    setSelectedLanguage(null); // Reset selected language
+                                    setSelectedLanguage(null); 
                                 } else {
-                                    setSelectedLanguage(value); // Set selected language
+                                    setSelectedLanguage(value); 
                                 }
                             }}>
                                 <Select.Trigger>
                                     <Select.Value placeholder="Select a language" />
                                 </Select.Trigger>
                                 <Select.Content>
-                                    <Select.Item value="clear">Clear Selection</Select.Item> {/* Clear Option */}
+                                    <Select.Item value="clear">Clear Selection</Select.Item> 
                                     {languages.map((item) => (
                                         <Select.Item key={item.value} value={item.value}>
                                             {item.label}
