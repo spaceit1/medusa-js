@@ -1,5 +1,5 @@
 import { defineWidgetConfig } from "@medusajs/admin-sdk";
-import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton } from "@medusajs/ui";
+import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton,  Toaster, toast } from "@medusajs/ui";
 import { EllipsisHorizontal, PencilSquare, Trash, ComputerDesktop, MagnifyingGlass, CloudArrowUp, CheckMini } from "@medusajs/icons";
 import { useState, useRef, useEffect } from "react";
 import { FileModal } from "../components/custom/file-modal";
@@ -42,6 +42,9 @@ const ProductWidget = () => {
                 return updatedFiles;
             });
         }
+        toast.info("Data saved successfully.", {
+            description: "Document has been deleted.",
+        });
     };
 
     const dropFileFromDB = async (index: number) => {
@@ -205,6 +208,7 @@ const ProductWidget = () => {
 
     return (
         <Container className="divide-y p-0">
+            <Toaster />
             <div className="flex items-center justify-between px-6 py-4">
                 <Heading level="h2">Documents</Heading>
             </div>
@@ -301,7 +305,7 @@ const ProductWidget = () => {
             )}
 
             {relatedFiles.length > 0 && (
-                <div className="px-6 py-4">
+                <div className="px-6 py-4" style={{ width: '100%', maxHeight: '450px', overflowY: 'auto' }}>
                     <Heading level="h3">Related files</Heading>
                     <div>    
                         <Table>

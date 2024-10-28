@@ -11889,7 +11889,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.21.0":
+"express@npm:^4.21.0, express@npm:^4.21.1":
   version: 4.21.1
   resolution: "express@npm:4.21.1"
   dependencies:
@@ -15620,6 +15620,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "my-monorepo@workspace:."
   dependencies:
+    cors: "npm:^2.8.5"
+    express: "npm:^4.21.1"
     turbo: "npm:latest"
     typescript: "npm:latest"
   languageName: unknown
