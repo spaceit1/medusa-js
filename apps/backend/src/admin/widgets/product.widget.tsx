@@ -11,8 +11,8 @@ const ProductWidget = () => {
     const [documentType, setDocumentType] = useState<string>("");
     const [uploadedFiles, setUploadedFiles] = useState<Array<{ fileName: string, language: string, documentType: string }>>([]);
     const [relatedFiles, setRelatedFiles] = useState<Array<{ id:number | string, file_name: string, language: string, document_type: string }>>([]);
-    const [selectedFiles, setSelectedFiles] = useState<Array<{ file_name: string, language: string, document_type: string }>>([]); // State for selected files
-    const [modalOpen, setModalOpen] = useState(false); // State to manage modal visibility
+    const [selectedFiles, setSelectedFiles] = useState<Array<{ file_name: string, language: string, document_type: string }>>([]); 
+    const [modalOpen, setModalOpen] = useState(false); 
     
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +29,7 @@ const ProductWidget = () => {
     };
 
     const editDocument = () => {
-        // Implement your edit logic here
+        // todo
     };
 
     const deleteDocument = (index: number, type: string) => {
@@ -113,7 +113,7 @@ const ProductWidget = () => {
                 documentType,
             }));
             setUploadedFiles([...uploadedFiles, ...newUploadedFiles]);
-            setFiles([]); // Clear file input after upload
+            setFiles([]); 
         } else {
             alert("Please select files, language, and document type.");
         }
@@ -184,8 +184,8 @@ const ProductWidget = () => {
     };
 
     const handleFileSelection = (selectedFiles: Array<{ file_name: string, language: string, document_type: string }>) => {
-        setSelectedFiles(selectedFiles); // Set the selected files from the modal
-        setModalOpen(false); // Close the modal
+        setSelectedFiles(selectedFiles);
+        setModalOpen(false); 
     };
 
     const Modal = () => {
