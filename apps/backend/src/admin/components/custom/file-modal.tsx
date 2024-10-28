@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox, Button, Table, Input } from "@medusajs/ui";
+import { Checkbox, Button, Table, Input, Toaster, toast} from "@medusajs/ui";
 import { Skeleton } from "../common/skeleton";
 
 interface FileModalProps {
@@ -58,19 +58,55 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             language: row.language,
             document_type: row.document_type,
         }));
-        console.log("Wybrane pliki:", selectedFiles);
-        setSelectedFiles(selectedFiles); 
+        //console.log("Wybrane pliki:", selectedFiles);
+        setSelectedFiles(selectedFiles);
+        let productId = getProductIdFromUrl();
+        saveDataInDatabase(selectedFiles, productId);
         onClose(); 
     };
 
-    // Filtrowanie wierszy na podstawie `searchTerm` i zaznaczonych checkboxów typu dokumentu
+    const getProductIdFromUrl = () => {
+        let productUrl = location.href;
+        let splittedUrl = productUrl.split('/');
+        return splittedUrl[splittedUrl.length - 1];
+    };
+    
+    const saveDataInDatabase = async (selectedFiles, productId) => {
+        try {
+            const response = await fetch("http://localhost:9000/product-documents/upload", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ product_id: productId, documents: selectedFiles }),
+            });
+            
+            if (!response.ok) {
+                throw new Error("Failed to save data in database.");
+            }
+            
+            const data = await response.json();
+            console.log("Data saved in database:", data);
+    
+            toast.info("Data saved successfully.", {
+                description: "Documents have been added to the database.",
+            });
+            
+        } catch (error) {
+            console.error("Error saving data in database:", error);
+            toast.error("Failed to save data.", {
+                description: "An error occurred while saving to the database.",
+            });
+        }
+    };
+    
     const filteredRows = rows.filter(row => {
         const matchesSearchTerm = row.file_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             row.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
             row.document_type.toLowerCase().includes(searchTerm.toLowerCase());
         
         const matchesDocumentType = (
-            (!showInstruction && !showCertificate && !showComplianceCard && !showOther) || // Brak zaznaczonego checkboxa oznacza wyświetlenie wszystkich
+            (!showInstruction && !showCertificate && !showComplianceCard && !showOther) ||
             (showInstruction && row.document_type === "instruction") ||
             (showCertificate && row.document_type === "certificate") ||
             (showComplianceCard && row.document_type === "compliance_card") ||
@@ -86,6 +122,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                 <Skeleton className="loading" />
             ) : (
                 <>
+                    <Toaster />
                     <div className="absolute left-[70px] top-[57px] flex flex-row gap-10 items-center">
                         <Input
                             className="w-[300px]"
