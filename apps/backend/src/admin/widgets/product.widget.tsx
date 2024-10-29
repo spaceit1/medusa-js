@@ -120,22 +120,18 @@ const ProductWidget = () => {
         }
     };
 
-
-
     const saveLocal = async () => {
-        // Get the file input element by ID
+        
         const input = document.getElementById('fileInput') as HTMLInputElement;
     
-        // Ensure the input and its files exist
         if (!input || !input.files || input.files.length === 0) {
             console.error("No files selected.");
             return;
         }
     
-        // Create a new FormData object and append each selected file
         const formData = new FormData();
         Array.from(input.files).forEach((file) => {
-            formData.append('files', file); // 'files' is the key expected by the backend
+            formData.append('files', file); 
         });
     
         try {
