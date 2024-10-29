@@ -262,7 +262,6 @@ const ProductWidget = () => {
                     ref={fileInputRef}
                     id="fileInput" 
                     type="file" 
-                    multiple 
                     accept="image/*,application/pdf"
                     onChange={handleFileChange} 
                     className="hidden" 
