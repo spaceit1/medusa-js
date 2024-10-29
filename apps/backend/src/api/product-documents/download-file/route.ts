@@ -13,7 +13,7 @@ const pool = new Pool({
 
 // Konfiguracja CORS
 const corsOptions = {
-    origin: "http://localhost:8000", // Upewnij się, że adres frontendowy jest poprawny
+    origin: process.env.STORE_CORS, // Upewnij się, że adres frontendowy jest poprawny
     credentials: true,
 };
 

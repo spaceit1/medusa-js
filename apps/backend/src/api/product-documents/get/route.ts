@@ -11,7 +11,7 @@ const pool = new Pool({
 
 // Konfiguracja CORS
 const corsOptions = {
-    origin: "http://localhost:8000",
+    origin: process.env.STORE_CORS,
     credentials: true,
 };
 
