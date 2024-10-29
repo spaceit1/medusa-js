@@ -1,13 +1,14 @@
 'use client'
-import { HttpTypes } from "@medusajs/types"
-import { Table, Text } from "@medusajs/ui"
-import Markdown from "react-markdown"
-import Accordion from "./accordion"
-
+import { HttpTypes } from "@medusajs/types";
+import { Table, Text } from "@medusajs/ui";
+import Markdown from "react-markdown";
+import Accordion from "./accordion";
+import { useEffect, useState } from "react";
+import { ArrowDownTray } from "@medusajs/icons"
 
 type ProductTabsProps = {
-  product: HttpTypes.StoreProduct
-}
+  product: HttpTypes.StoreProduct;
+};
 
 const ProductTabs = ({ product }: ProductTabsProps) => {
   const tabs = [
@@ -21,9 +22,9 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
     },
     {
       label: "Documents",
-      component: <ProductDocumentsTab product={product} />
-    }
-  ]
+      component: <ProductDocumentsTab product={product} />,
+    },
+  ];
 
   return (
     <div className="w-full">
@@ -41,8 +42,8 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
         ))}
       </Accordion>
     </div>
-  )
-}
+  );
+};
 
 const ProductSpecsTab = ({ product }: ProductTabsProps) => {
   return (
@@ -65,35 +66,66 @@ const ProductSpecsTab = ({ product }: ProductTabsProps) => {
         {product.description ? product.description : "-"}
       </Markdown>
     </div>
-  )
-}
-
-const fetchDocuments = async (productId: string) => {
-
-  const response = await fetch(`http://localhost:9000/product-documents/get`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ product_id: productId }),
-  });
-
-  const data = await response.json();
-  console.log(response);
-  
-}
+  );
+};
 
 const ProductDocumentsTab = ({ product }: ProductTabsProps) => {
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  console.log(product);
-  console.log(product.id);
-  
-  return(
-  <>
-    <h1>{product.id}</h1>
-    <span>Tutaj pojawi sie lista dokumentow</span>
-  </>
-  )
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const response = await fetch(`http://localhost:9000/product-documents/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ product_id: product.id }),
+        });
+
+        const data = await response.json();
+        setDocuments(data); // Set the documents state
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchDocuments();
+  }, [product.id]); // Re-fetch if the product ID changes
+
+  if (loading) {
+    return <p>Loading documents...</p>; // Display loading state
+  }
+
+  return (
+    <div className="text-small-regular py-8">
+      <Table className="rounded-lg shadow-borders-base overflow-hidden border-none">
+        <Table.Body>
+          {documents.length > 0 ? (
+            documents.map((doc) => (
+              <Table.Row key={doc.id}>
+                <Table.Cell className="border-r">
+                  <span className="font-semibold">{doc.file_name}</span>
+                </Table.Cell>
+                <Table.Cell className="px-2 border-r text-center">{doc.language}</Table.Cell>
+                <Table.Cell className="px-4 border-r text-center">{doc.document_type}</Table.Cell>
+                <Table.Cell className="px-4 flex justify-center items-center"><ArrowDownTray className=" cursor-default hover:cursor-pointer"/></Table.Cell>
+              </Table.Row>
+            ))
+          ) : (
+            <Table.Row>
+              <Table.Cell className="text-center">
+                No documents available.
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table>
+    </div>
+  );
 };
 
 const ProductSpecificationsTab = ({ product }: ProductTabsProps) => {
@@ -120,25 +152,27 @@ const ProductSpecificationsTab = ({ product }: ProductTabsProps) => {
             </Table.Row>
           )}
 
-          {product.metadata && 
+          {product.metadata &&
             Object.entries(product.metadata).map(([key, value]) => (
               <Table.Row key={key}>
-                <Table.Cell className="border-r">                 
-                    <span className="font-semibold">{key}</span>
+                <Table.Cell className="border-r">
+                  <span className="font-semibold">{key}</span>
                 </Table.Cell>
                 <Table.Cell className="px-4">
-                {key === "Catalog card" ?
-                    <span className="font-semibold"><a href={value as string}>download</a></span> 
-                  :
-                  <p>{value as string}</p>
-                }
+                  {key === "Catalog card" ? (
+                    <span className="font-semibold">
+                      <a href={value as string}>download</a>
+                    </span>
+                  ) : (
+                    <p>{value as string}</p>
+                  )}
                 </Table.Cell>
               </Table.Row>
             ))}
         </Table.Body>
       </Table>
     </div>
-  )
-}
+  );
+};
 
-export default ProductTabs
+export default ProductTabs;

@@ -113,11 +113,50 @@ const ProductWidget = () => {
                 documentType,
             }));
             setUploadedFiles([...uploadedFiles, ...newUploadedFiles]);
+            saveLocal();
             setFiles([]); 
         } else {
             alert("Please select files, language, and document type.");
         }
     };
+
+    const saveLocal = async () => {
+        
+        const input = document.getElementById('fileInput') as HTMLInputElement;
+    
+        if (!input || !input.files || input.files.length === 0) {
+            console.error("No files selected.");
+            return;
+        }
+    
+        const formData = new FormData();
+        Array.from(input.files).forEach((file) => {
+            formData.append('files', file); 
+        });
+    
+        try {
+            const response = await fetch('http://localhost:9000/product-documents/save-file', {
+                method: 'POST',
+                body: formData,
+            });
+    
+            if (!response.ok) {
+                throw new Error('File upload failed');
+            }
+    
+            const result = await response.json();
+            console.log('Upload successful:', result);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+    
+    
+    
+    
+
+    
+
 
     const handleSave = async () => {
         if (uploadedFiles.length > 0) {
@@ -221,6 +260,7 @@ const ProductWidget = () => {
                 </div>
                 <input 
                     ref={fileInputRef}
+                    id="fileInput" 
                     type="file" 
                     multiple 
                     accept="image/*,application/pdf"
