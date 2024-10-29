@@ -12,7 +12,7 @@ const pool = new Pool({
 export const GET = async (req: any, res: any) => {
     
     try {
-        let sql = `SELECT * FROM document`;
+        let sql = `SELECT DISTINCT file_name, language, document_type FROM document;`;
         let result = await pool.query(sql);
         res.status(200).json(result.rows);
     } catch (error) {
