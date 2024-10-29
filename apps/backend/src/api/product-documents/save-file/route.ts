@@ -3,7 +3,6 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 
-// Set up storage for multer
 const uploadDir = path.join(__dirname, '../../../../uploads');
 
 if (!fs.existsSync(uploadDir)) {
@@ -15,19 +14,17 @@ const storage = multer.diskStorage({
         cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        // Use the original filename
+
         file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
         const originalName = file.originalname;
         const ext = path.extname(originalName);
         const baseName = path.basename(originalName, ext);
 
-        // Append a timestamp to avoid filename collisions
         const uniqueSuffix = `${baseName}`;
         cb(null, file.originalname);
     },
 });
 
-// Create the multer upload middleware
 const upload = multer({ storage });
 
 export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
