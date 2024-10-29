@@ -16,13 +16,14 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         // Use the original filename
+        file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
         const originalName = file.originalname;
         const ext = path.extname(originalName);
         const baseName = path.basename(originalName, ext);
 
         // Append a timestamp to avoid filename collisions
-        const uniqueSuffix = `${baseName}-${Date.now()}${ext}`;
-        cb(null, uniqueSuffix);
+        const uniqueSuffix = `${baseName}`;
+        cb(null, file.originalname);
     },
 });
 
