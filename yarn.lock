@@ -2942,6 +2942,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/admin-bundler@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/admin-bundler@npm:2.0.1"
+  dependencies:
+    "@medusajs/admin-shared": "npm:2.0.1"
+    "@medusajs/admin-vite-plugin": "npm:2.0.1"
+    "@medusajs/dashboard": "npm:2.0.1"
+    "@vitejs/plugin-react": "npm:^4.2.1"
+    autoprefixer: "npm:^10.4.16"
+    compression: "npm:^1.7.4"
+    postcss: "npm:^8.4.32"
+    tailwindcss: "npm:^3.3.6"
+    vite: "npm:^5.2.11"
+  peerDependencies:
+    express: ^4.21.0
+    react-dom: ^18.0.0
+  checksum: 10/f2241281dc786da0531a9817c68a9e05988d6595b13540d591bc31ef5a06f42e8a1291573d729c7ecb078a492fb67fbac185771d94188cfe130612a946972095
+  languageName: node
+  linkType: hard
+
 "@medusajs/admin-sdk@npm:2.0.0":
   version: 2.0.0
   resolution: "@medusajs/admin-sdk@npm:2.0.0"
@@ -2957,6 +2977,13 @@ __metadata:
   version: 2.0.0
   resolution: "@medusajs/admin-shared@npm:2.0.0"
   checksum: 10/5a9bc263734d973ebb4841318c17da4dda4d50b792a03d58cce687fbad257c347693b73966f93877622bd273bebc27a1ce0d91227323b0f8589eaedbadafd8a8
+  languageName: node
+  linkType: hard
+
+"@medusajs/admin-shared@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/admin-shared@npm:2.0.1"
+  checksum: 10/0e3088de97ac979ad16be3f5a52925ffc1a9e63fab177423ff0445e966c2fd476adf389aa95ba25d5fe07c3c85c1f7b03b5303596de60510fb44c864f32dad66
   languageName: node
   linkType: hard
 
@@ -2978,6 +3005,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/admin-vite-plugin@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/admin-vite-plugin@npm:2.0.1"
+  dependencies:
+    "@babel/parser": "npm:7.25.6"
+    "@babel/traverse": "npm:7.25.6"
+    "@medusajs/admin-shared": "npm:2.0.1"
+    chokidar: "npm:3.5.3"
+    fdir: "npm:6.1.1"
+    magic-string: "npm:0.30.5"
+    outdent: "npm:^0.8.0"
+    picocolors: "npm:^1.1.0"
+  peerDependencies:
+    vite: ^5.0.0
+  checksum: 10/d9e38cbb4a26130d3e0578333d93fd6b1fdebc4d89ad5b66835bbeda5612b45743d2d1f36b4fae7de068c155819cc89f97ccef5ce50c7c73b9cfb417cca5b946
+  languageName: node
+  linkType: hard
+
 "@medusajs/api-key@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/api-key@npm:2.0.0"
@@ -2988,6 +3033,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/704a4f2af03c94e973afe80def0b21ad0d2248d09bf2789c6ee833c542815d899c2ba9c865267fea4263998b658dcb69838f8289c1ecc72d2e7aecce9debe70e
+  languageName: node
+  linkType: hard
+
+"@medusajs/api-key@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/api-key@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/17f1c00ddb8c06e921667eba2f572ee717a34886f77e88bbb9f123a06e1bae3e3da76d6ee1fd4b8df7d8032285be43a16e7acf4db31b033769f567f718628c63
   languageName: node
   linkType: hard
 
@@ -3002,12 +3060,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/auth-emailpass@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/auth-emailpass@npm:2.0.1"
+  dependencies:
+    scrypt-kdf: "npm:^2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/5d851a7336be77b352e32223e0fb9202421ba33455a9213ad368d15563e1622ac1d7295060a4af18d659761b1a84768ba777535febc95fe3015e9eb43876c237
+  languageName: node
+  linkType: hard
+
 "@medusajs/auth-github@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/auth-github@npm:2.0.0"
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/97a193c673d05806f7b240c845f1d7dbc2b1a0440b99c67db8e017aee72c3e9506c65d138a143e96f244a1576fb36ea2595408055ff385bbb8088b872947d06b
+  languageName: node
+  linkType: hard
+
+"@medusajs/auth-github@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/auth-github@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/0676c19491a4833c586ab0701cae1f9770545c147b433f4fb48ebcc6dcb18e77d02c59f5efe7c661ec0de216c74cb8419d40ad444e9807ac774ca6f18185d1d8
   languageName: node
   linkType: hard
 
@@ -3019,6 +3097,17 @@ __metadata:
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/c9836e206864027b6e5406ebdb5df2ce7223103abc6624fcf28d82a09abef04a5948a71d5be59058516f46ff7fbbe5b314fe3faf889d644a6fb78231d2b403ad
+  languageName: node
+  linkType: hard
+
+"@medusajs/auth-google@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/auth-google@npm:2.0.1"
+  dependencies:
+    jsonwebtoken: "npm:^9.0.2"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/4348340198eb3006713c9b1cb7f43dadd3b22339d872f6a543be1ca9d9ca0032ee12d2523c77a694159ecf83f75310918de96678577537f3ad19d283e0e3ee16
   languageName: node
   linkType: hard
 
@@ -3035,12 +3124,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/auth@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/auth@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/c979a923b63b57a4aafe173b08960948e7475d80112f3d5bdc8a69fcd30925c007d69d29dedd0acf432276396bfd6594ee73ffe6d82a769caaf72f50c37890e4
+  languageName: node
+  linkType: hard
+
 "@medusajs/cache-inmemory@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/cache-inmemory@npm:2.0.0"
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/b604da31622e58fd7ed80355715a71a536b317a4647d0a6555594eaa56c4d11508ed52ab9fb3df3f8fe28f1e67ebf4df2610e3d8d2e2f26572be03723555890a
+  languageName: node
+  linkType: hard
+
+"@medusajs/cache-inmemory@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/cache-inmemory@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/bba3b0292f1b17808a15158c4d5ab927d328ed18f11e4caecb29725a5ea82fadbe66c83d00e65f99b89d6d95e8e65211a77438f9406f45c5e213f89402063cef
   languageName: node
   linkType: hard
 
@@ -3056,6 +3167,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/cache-redis@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/cache-redis@npm:2.0.1"
+  dependencies:
+    ioredis: "npm:^5.4.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    awilix: ^8.0.1
+  checksum: 10/fd7db46d5f14a13fd86de27f6b94f8b90bb122d0fefb81dc879d9d56f8cda85b593331c4d1e80ed3199faf23f688045fa32aca51d560f71e37751d0c26e5626b
+  languageName: node
+  linkType: hard
+
 "@medusajs/cart@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/cart@npm:2.0.0"
@@ -3066,6 +3189,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/e698d3ddfc6896f84cad37202f6959bd946b15d64bbcaed26158e9bfdacc45b05b0f2bbf4db3ed551d7115f41e6257205922bc39d14f98620ef289f9ebcbcb7b
+  languageName: node
+  linkType: hard
+
+"@medusajs/cart@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/cart@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/ccfdabaa220493ad76efda4776691ad89ed4e9588ad0814bc1e9e3ff8920cf77c9e17f2479fe6316ec7e3d2b592615d6974f246cd8850e31b2b2ce1f6fc5ce56
   languageName: node
   linkType: hard
 
@@ -3122,6 +3258,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/core-flows@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/core-flows@npm:2.0.1"
+  dependencies:
+    json-2-csv: "npm:^5.5.4"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    awilix: ^8.0.1
+  checksum: 10/5930c4ca221e36e1192ab13bfd906902df80b7591994a8a42dd065341937e6fc89ac6d85d03decb1f85d31fd550b5c8b5cefe97ee3fa6553a5be88884772f366
+  languageName: node
+  linkType: hard
+
 "@medusajs/currency@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/currency@npm:2.0.0"
@@ -3135,6 +3283,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/currency@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/currency@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/0e9c97fa3d154c47890cc6e0bf94be24ff9c2dd0ff86f3339633b455cfcf1c7c14a01acaf7a61a5c938679a145cbf526602387f994467495238bb3fbb57a2f2d
+  languageName: node
+  linkType: hard
+
 "@medusajs/customer@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/customer@npm:2.0.0"
@@ -3145,6 +3306,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/60be10a0c1da6a275e90714d7d793647ff4e093dc156bb2e2d07617e4ab37aa9cb2df698bec86f0ff2c8567ba85263f62c06d58ea8e04749f2e1b46063d870ec
+  languageName: node
+  linkType: hard
+
+"@medusajs/customer@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/customer@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/6cd38e0e5709bc2ae574a63e23ce523b89ccac73fd3e6b752ba663bd3b8c0ba3e336c101383cac9d27089b352c553ddfe823537b141b19d5d515d99a19200be1
   languageName: node
   linkType: hard
 
@@ -3189,6 +3363,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/dashboard@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/dashboard@npm:2.0.1"
+  dependencies:
+    "@ariakit/react": "npm:^0.4.1"
+    "@dnd-kit/core": "npm:^6.1.0"
+    "@dnd-kit/sortable": "npm:^8.0.0"
+    "@hookform/error-message": "npm:^2.0.1"
+    "@hookform/resolvers": "npm:3.4.2"
+    "@medusajs/admin-shared": "npm:2.0.1"
+    "@medusajs/icons": "npm:2.0.1"
+    "@medusajs/js-sdk": "npm:2.0.1"
+    "@medusajs/ui": "npm:4.0.1"
+    "@radix-ui/react-collapsible": "npm:1.1.0"
+    "@tanstack/react-query": "npm:^5.28.14"
+    "@tanstack/react-table": "npm:8.20.5"
+    "@tanstack/react-virtual": "npm:^3.8.3"
+    "@uiw/react-json-view": "npm:^2.0.0-alpha.17"
+    cmdk: "npm:^0.2.0"
+    date-fns: "npm:^3.6.0"
+    framer-motion: "npm:^11.0.3"
+    i18next: "npm:23.7.11"
+    i18next-browser-languagedetector: "npm:7.2.0"
+    i18next-http-backend: "npm:2.4.2"
+    lodash: "npm:^4.17.21"
+    match-sorter: "npm:^6.3.4"
+    qs: "npm:^6.12.0"
+    react: "npm:^18.2.0"
+    react-country-flag: "npm:^3.1.0"
+    react-currency-input-field: "npm:^3.6.11"
+    react-dom: "npm:^18.2.0"
+    react-helmet-async: "npm:^2.0.5"
+    react-hook-form: "npm:7.49.1"
+    react-i18next: "npm:13.5.0"
+    react-jwt: "npm:^1.2.0"
+    react-router-dom: "npm:6.20.1"
+    zod: "npm:3.22.4"
+  checksum: 10/9c008fe5042062f273aa1634099a5207e400657c4f0c5c60fbe8948840155bc4f6fd88d04502bb92594843a902e12833f6d4f127786f24989a75c3f13ab2d121
+  languageName: node
+  linkType: hard
+
 "@medusajs/event-bus-local@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/event-bus-local@npm:2.0.0"
@@ -3197,6 +3412,17 @@ __metadata:
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/99b1d3cbba1d4d46e9ba7660ba3bc9008e661ac9ef671e6bbe45363fe894250eee55e4a9d47ddc27f138f67cc363fb7eb714a8b75464364cef3fda278b392d13
+  languageName: node
+  linkType: hard
+
+"@medusajs/event-bus-local@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/event-bus-local@npm:2.0.1"
+  dependencies:
+    ulid: "npm:^2.3.0"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/e60a48991b0d7f31864a9b59f78d155ba42894f2f91732506e836cc7e9b97674a88d817b960e373bc99194d398bb80a383c7d0ac0e3524299b44df41473577f2
   languageName: node
   linkType: hard
 
@@ -3213,12 +3439,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/event-bus-redis@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/event-bus-redis@npm:2.0.1"
+  dependencies:
+    bullmq: "npm:5.13.0"
+    ioredis: "npm:^5.4.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    awilix: ^8.0.1
+  checksum: 10/89b38fd22404019726028a553e41ad35f0974139c7cb5d2151f86900b269dcec6a5ac336257b7b9b2259dde4de24b40beea938b17a46d86382efc44c28b7b45b
+  languageName: node
+  linkType: hard
+
 "@medusajs/file-local@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/file-local@npm:2.0.0"
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/d71ca6ae37ebfde510ed7152e971de99bd9f755e9c1464f94ddb6aa97f2297c22e42be77c01ddacd8975a51a53680424e7508f9c2c0997be7770318027490ec7
+  languageName: node
+  linkType: hard
+
+"@medusajs/file-local@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/file-local@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/9dc2a28c62439fe077c76d93de4c59b89758969280132554e651f8d4ba111aae478cddc0a0fba5a645689c3cb09ab01e8050b37c6dd4cd42a92ccdfb0ef4e07e
   languageName: node
   linkType: hard
 
@@ -3235,6 +3483,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/file-s3@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/file-s3@npm:2.0.1"
+  dependencies:
+    "@aws-sdk/client-s3": "npm:^3.556.0"
+    "@aws-sdk/s3-request-presigner": "npm:^3.556.0"
+    ulid: "npm:^2.3.0"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/12ddbed68e52d9dab4da326350293cdc73ea61d213f72acae960b8c749b16a3c64338cfe36f8061f1225807035b24fcad92e1fd5485402f3a3a28be5f337eb5d
+  languageName: node
+  linkType: hard
+
 "@medusajs/file@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/file@npm:2.0.0"
@@ -3242,6 +3503,16 @@ __metadata:
     "@medusajs/framework": ^2.0.0
     awilix: ^8.0.1
   checksum: 10/5109f21186a1fa2c6c88d6dd4d05c74b3a63928749a4e5d9973db35e1a50f2b2f9d28483e25460709fb9685aa212e7e2eee39b225a019ea39338dc1cba23a080
+  languageName: node
+  linkType: hard
+
+"@medusajs/file@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/file@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    awilix: ^8.0.1
+  checksum: 10/6bbde51572bb57f3428748fec8fb7af6b6826c2025208ed4fd6aa0cda2bbea663d4be78c5e7bebae9fd6c1e6edd2b8921df9e96936dd409d33d6721b7dcdacc6
   languageName: node
   linkType: hard
 
@@ -3300,6 +3571,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/fulfillment-manual@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/fulfillment-manual@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/3b39e128b9ce3109ca0de178517d3485f1b21889d28e7cf8b950eb7467ba84a209010de6cbd939d097d961459b55c9a8ac384abc520f951d4de6d45afeb17ac7
+  languageName: node
+  linkType: hard
+
 "@medusajs/fulfillment@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/fulfillment@npm:2.0.0"
@@ -3313,12 +3593,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/fulfillment@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/fulfillment@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/bf8f6442cc9e92ace50586d035837295d96c21cb72e87b43e7bef106ded70a6da967327175cf6621ac1e7a61212d17c4b605377a251a4630b21018f1721dc33d
+  languageName: node
+  linkType: hard
+
 "@medusajs/icons@npm:2.0.0, @medusajs/icons@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/icons@npm:2.0.0"
   peerDependencies:
     react: ^16.x || ^17.x || ^18.x
   checksum: 10/54134edf1ff264060c6d16a4154652925281f6f12d08569679d5d60f7166223a7ab402c0ca418becfa1683f837d2e7c1cf147f201de356e2546880420c033e0b
+  languageName: node
+  linkType: hard
+
+"@medusajs/icons@npm:2.0.1, @medusajs/icons@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/icons@npm:2.0.1"
+  peerDependencies:
+    react: ^16.x || ^17.x || ^18.x
+  checksum: 10/6756c49e2902763a61b194c5ab60c9fbc2a20091433be802897a8b0db719cfb3ef512629f720e1ce0cfb771242942ce80f5cc9fb90f3d6b0c2702bbd5bd4189b
   languageName: node
   linkType: hard
 
@@ -3336,6 +3638,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/index@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/index@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/knex": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/5747a4dfb2c390240b32c80ce39294df952e8f88c8da0c267087c20736626cbd22e2379ce64c43b1b5909808966dca2071103dff32d0bd402474bc53644255b8
+  languageName: node
+  linkType: hard
+
 "@medusajs/inventory@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/inventory@npm:2.0.0"
@@ -3349,6 +3665,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/inventory@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/inventory@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/9c7acff09722ad1ab78cda7762ca843492e828a33141de2c22e1f46957bceda18b59e65dedc044ef5c4e4bfa0d5c23bd200228786e12bedc7a3ac965792df547
+  languageName: node
+  linkType: hard
+
 "@medusajs/js-sdk@npm:2.0.0":
   version: 2.0.0
   resolution: "@medusajs/js-sdk@npm:2.0.0"
@@ -3357,6 +3686,17 @@ __metadata:
     fetch-event-stream: "npm:^0.1.5"
     qs: "npm:^6.12.1"
   checksum: 10/4c33e0ce90c55844f55e070529dca1566d96788c54f3fb7fc068d9d3d070583a2fb64b74c191801747c972f9b78077a47f1e86aa29ac80260d1e789f22f89d87
+  languageName: node
+  linkType: hard
+
+"@medusajs/js-sdk@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/js-sdk@npm:2.0.1"
+  dependencies:
+    "@medusajs/types": "npm:^2.0.1"
+    fetch-event-stream: "npm:^0.1.5"
+    qs: "npm:^6.12.1"
+  checksum: 10/1e811d5024e20d132f7233ff3160ad17c020f6a5c52d4d26bd3fd99e7f27205fbaceabb5b2a719c31970f7c711904b879d0d46e012a8f9ea3a907473484bfa8d
   languageName: node
   linkType: hard
 
@@ -3373,12 +3713,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/link-modules@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/link-modules@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/326ba5f428622dec802f3afb9c53ffb07cc4baff07d59deb5df23b46806d97fb33a999688eed2d6ba22db797e2216374ffe8d6155f4e884b673362f77ef0e30f
+  languageName: node
+  linkType: hard
+
 "@medusajs/locking-postgres@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/locking-postgres@npm:2.0.0"
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/7704a73745358ddae2911e7c1a89db740ebc000ddc9faa021fba082f1137d5fbea39b70cf44ff50176e86daea30cacf180c2c4c6e715f8467a1751d90daeac33
+  languageName: node
+  linkType: hard
+
+"@medusajs/locking-postgres@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/locking-postgres@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/9cbdf7ca65fc305266c6fd76a53f04ae422ada65778dff27265a433bf2c3d1bf41ab999a34536ab8581b803fa54ad2dd9fb4276b3933ed57e5f1436d8b6fa2bf
   languageName: node
   linkType: hard
 
@@ -3393,6 +3755,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/locking-redis@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/locking-redis@npm:2.0.1"
+  dependencies:
+    ioredis: "npm:^5.4.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/b30ef1cbeccf0a6b84ec14d2d56291f782b51174f1b697bde2ba0f5972ba7f88c73fc02bb6c34cb0c2ec871f652134d639e4d2c4bab214e0d2761ba01e84b6a7
+  languageName: node
+  linkType: hard
+
 "@medusajs/locking@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/locking@npm:2.0.0"
@@ -3403,6 +3776,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/2a83c128e094c79afe53c12d427e52841294fa726f586954e410152ec976d1c9a55b5499e1403730a8eb814c1d7f36d7c0d687c11d3bcd430c8e9e237f577199
+  languageName: node
+  linkType: hard
+
+"@medusajs/locking@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/locking@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/7566a9ac510858df700ffdd47eb74ef822cf932d2899b8aba3da41c41820780c8908dbca47c09fe8d7aca61ee0a1875d5b46f24b15e76394a8aa0bfd23ff12ff
   languageName: node
   linkType: hard
 
@@ -3484,6 +3870,84 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/medusa@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/medusa@npm:2.0.1"
+  dependencies:
+    "@inquirer/checkbox": "npm:^2.3.11"
+    "@inquirer/input": "npm:^2.2.9"
+    "@medusajs/admin-bundler": "npm:^2.0.1"
+    "@medusajs/api-key": "npm:^2.0.1"
+    "@medusajs/auth": "npm:^2.0.1"
+    "@medusajs/auth-emailpass": "npm:^2.0.1"
+    "@medusajs/auth-github": "npm:^2.0.1"
+    "@medusajs/auth-google": "npm:^2.0.1"
+    "@medusajs/cache-inmemory": "npm:^2.0.1"
+    "@medusajs/cache-redis": "npm:^2.0.1"
+    "@medusajs/cart": "npm:^2.0.1"
+    "@medusajs/core-flows": "npm:^2.0.1"
+    "@medusajs/currency": "npm:^2.0.1"
+    "@medusajs/customer": "npm:^2.0.1"
+    "@medusajs/event-bus-local": "npm:^2.0.1"
+    "@medusajs/event-bus-redis": "npm:^2.0.1"
+    "@medusajs/file": "npm:^2.0.1"
+    "@medusajs/file-local": "npm:^2.0.1"
+    "@medusajs/file-s3": "npm:^2.0.1"
+    "@medusajs/fulfillment": "npm:^2.0.1"
+    "@medusajs/fulfillment-manual": "npm:^2.0.1"
+    "@medusajs/index": "npm:^2.0.1"
+    "@medusajs/inventory": "npm:^2.0.1"
+    "@medusajs/link-modules": "npm:^2.0.1"
+    "@medusajs/locking": "npm:^2.0.1"
+    "@medusajs/locking-postgres": "npm:^2.0.1"
+    "@medusajs/locking-redis": "npm:^2.0.1"
+    "@medusajs/notification": "npm:^2.0.1"
+    "@medusajs/notification-local": "npm:^2.0.1"
+    "@medusajs/notification-sendgrid": "npm:^2.0.1"
+    "@medusajs/order": "npm:^2.0.1"
+    "@medusajs/payment": "npm:^2.0.1"
+    "@medusajs/payment-stripe": "npm:^2.0.1"
+    "@medusajs/pricing": "npm:^2.0.1"
+    "@medusajs/product": "npm:^2.0.1"
+    "@medusajs/promotion": "npm:^2.0.1"
+    "@medusajs/region": "npm:^2.0.1"
+    "@medusajs/sales-channel": "npm:^2.0.1"
+    "@medusajs/stock-location": "npm:^2.0.1"
+    "@medusajs/store": "npm:^2.0.1"
+    "@medusajs/tax": "npm:^2.0.1"
+    "@medusajs/telemetry": "npm:^2.0.1"
+    "@medusajs/user": "npm:^2.0.1"
+    "@medusajs/workflow-engine-inmemory": "npm:^2.0.1"
+    "@medusajs/workflow-engine-redis": "npm:^2.0.1"
+    "@swc/core": "npm:1.5.7"
+    "@swc/helpers": "npm:^0.5.11"
+    "@types/express": "npm:^4.17.17"
+    boxen: "npm:^5.0.1"
+    chalk: "npm:^4.0.0"
+    chokidar: "npm:^3.4.2"
+    compression: "npm:^1.7.4"
+    express: "npm:^4.21.0"
+    fs-exists-cached: "npm:^1.0.0"
+    jsonwebtoken: "npm:^9.0.2"
+    lodash: "npm:^4.17.21"
+    multer: "npm:^1.4.5-lts.1"
+    node-schedule: "npm:^2.1.1"
+    qs: "npm:^6.11.2"
+    request-ip: "npm:^3.3.0"
+    slugify: "npm:^1.6.6"
+    uuid: "npm:^9.0.0"
+    zod: "npm:3.22.4"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/knex": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/752f24d10e79e1b760f70861b94ba44ee77d3bb2c5dc2bcb1dff8e0057fc7b0d2e6dd7ab432c241654a601acfb4dd65710a28fa477fe568aca4c8960b7175b0d
+  languageName: node
+  linkType: hard
+
 "@medusajs/modules-sdk@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/modules-sdk@npm:2.0.0"
@@ -3512,6 +3976,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/notification-local@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/notification-local@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/28a31a555f842b874cb723f645c8a0883fe74999113efd73360da58d0897484e68d1def4f624db0d83c0dec97f5ca645ee455584f16c113d92e9947049549f3d
+  languageName: node
+  linkType: hard
+
 "@medusajs/notification-sendgrid@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/notification-sendgrid@npm:2.0.0"
@@ -3520,6 +3993,17 @@ __metadata:
   peerDependencies:
     "@medusajs/framework": ^2.0.0
   checksum: 10/1c7b5c1705a51dd935538fb45d9cac8f90e77c97e31817c5d340a09b1d86872dcf68deab3f5ddf36474706bd05eaded7ca45d4b59354a97adef40365bcf2cb23
+  languageName: node
+  linkType: hard
+
+"@medusajs/notification-sendgrid@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/notification-sendgrid@npm:2.0.1"
+  dependencies:
+    "@sendgrid/mail": "npm:^8.1.3"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+  checksum: 10/35af74e61161f83c7b06948e90d72c547ca5a13e580c980fa0540e04fd4f34542502c0a60b070b681857cfa2b5cc2768f597d1f9062833a6edcf3e3a0ad000b0
   languageName: node
   linkType: hard
 
@@ -3533,6 +4017,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/12a59df2ac57697ee7cdf31662b33575fe6df65a6b6ef6aa1a4ba290e209be5aaedbf2da67ca664d9a276f6b5f461911e396840e4387b0ca8ac0d4415a597b18
+  languageName: node
+  linkType: hard
+
+"@medusajs/notification@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/notification@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/7461946cd75b49e34160078071e44a5f90308384bc8576223fa4a49c01a48b1df73316e23f6e95e1cfb4ec41d15b2dc4ad1b1161bd4070938285e42f1e2ed6ed
   languageName: node
   linkType: hard
 
@@ -3567,6 +4064,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/order@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/order@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/5aa4dc30e64462f5e94d68cd57096011952dd033ab4e71a7bfa85b1bfc30224f962388da5ab30dc06e0d8c10bb73b0a5703cec9a8aa55dc76b47e7ec60766cac
+  languageName: node
+  linkType: hard
+
 "@medusajs/payment-stripe@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/payment-stripe@npm:2.0.0"
@@ -3576,6 +4086,18 @@ __metadata:
     "@medusajs/framework": ^2.0.0
     awilix: ^8.0.1
   checksum: 10/c2c964d9296de90eccb95a063a0dafb8b942ea7b9b0d04e30bf4a01d87dad98f4b847336c81c99096a0564846c36f5adfd9741585a295d5f0b3828bb7cb408d9
+  languageName: node
+  linkType: hard
+
+"@medusajs/payment-stripe@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/payment-stripe@npm:2.0.1"
+  dependencies:
+    stripe: "npm:^15.5.0"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    awilix: ^8.0.1
+  checksum: 10/74f1a94b7bc9deaf4ecd3449a5e3245807064f7ede25179c56997ee9e3dd904739f898fa55994e59ad0eb1a289e9329d63055d40abe2aaab1c6d7ae09fb02860
   languageName: node
   linkType: hard
 
@@ -3592,6 +4114,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/payment@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/payment@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/a231d9e6e367d4b670847d52ae5eaf6a44c4a6b23e2e2bed4f5c8021aeedfa02cfd9347eccf8ab246f510c29e97020b71eee3c0477436ca3c549e77f5e0f593a
+  languageName: node
+  linkType: hard
+
 "@medusajs/pricing@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/pricing@npm:2.0.0"
@@ -3602,6 +4137,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/04073dfebd7a3b31aaad571d30c98aab86a0762a098e8e223dddfcad1c88f18bfd39ea755305f6e9cba0529de691b43b7dc4d98cd32cb4c7121494706e79cb47
+  languageName: node
+  linkType: hard
+
+"@medusajs/pricing@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/pricing@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/ff8ed3c5d0fe63f3ac3ef2eefebef448b6c2876b5513606189a801a4346aea943f0123dcf4d1291e048b40a2fe38797d2dc581523873a6dbfe11d8563323df78
   languageName: node
   linkType: hard
 
@@ -3618,6 +4166,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/product@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/product@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/b5f69d588514234703fd5bff45d985c3a61e05dfe06e9f63f858fa17940ade22ff6ffa5b3c6cfe3086e240b497ba5ec9d1000079b6b8f5e9bfa2c24598b42b4e
+  languageName: node
+  linkType: hard
+
 "@medusajs/promotion@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/promotion@npm:2.0.0"
@@ -3628,6 +4189,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/c3facd1e428ea7357035e6900e8705ebd3477a591a93472d2f9e7a13b6149fa09d94767e53e584836b5fbcc28752c467204222138185e63c8dac6b0657c0b38d
+  languageName: node
+  linkType: hard
+
+"@medusajs/promotion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/promotion@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/93693b26ba5179c8e943d0e5c9a5b2748030428e1985bd1f16e747cc3793aa1d1be098d7407993685aade68214ff628d2a5a8586034978d38d6af55e5533e54d
   languageName: node
   linkType: hard
 
@@ -3644,6 +4218,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/region@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/region@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/d53a092d3d62c08edcd2d6cbdafe8eee7352dba181876951ef895328f0bdf52c608ebf6511ab6f7bb38da2ea02c0722a85b07636a93bf90ceb8658e9074af126
+  languageName: node
+  linkType: hard
+
 "@medusajs/sales-channel@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/sales-channel@npm:2.0.0"
@@ -3654,6 +4241,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/a4d465ea75ffcb77f9da626f9cfd0c34acc999f68ab8ae386b41b69776d69d027df31e0235bd9ba4e54a0d653b519964d7bc5638fbe0d2612c44f033368b6503
+  languageName: node
+  linkType: hard
+
+"@medusajs/sales-channel@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/sales-channel@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/fa70c4b42fa4a3e5ee05da2fa0cd919636f40ef42c4d1ffe16602bd9cfdf6eb4a52ffeac9b37785cf8d0f0740a6f6873003257d8f8f5c3442ad66e15b66b9074
   languageName: node
   linkType: hard
 
@@ -3670,6 +4270,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/stock-location@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/stock-location@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/1e272ded46cc3d13d2216af93071dc0682c327505bd8a0adc1ff1756f66748d3e9f607bd6a8b7fc04862c91d98014329f63361199e4eba5d1e3b38a410445f6d
+  languageName: node
+  linkType: hard
+
 "@medusajs/store@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/store@npm:2.0.0"
@@ -3683,6 +4296,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/store@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/store@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/578b66c440648773c18aa98bee91b846031837e47666b65c325808104c139766d21b98285e0a092292e6d375bc2f2520486ed747b7543ec945a16354ea74811b
+  languageName: node
+  linkType: hard
+
 "@medusajs/tax@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/tax@npm:2.0.0"
@@ -3693,6 +4319,19 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/d1120dab6e68ec327c5768dea85cc0a99687bcd548ea59eeaf8358bbfe536fff64c52a37fbbe25e91f45a7a1674ff3b91288ea0592ed5af927f484e606bddc4f
+  languageName: node
+  linkType: hard
+
+"@medusajs/tax@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/tax@npm:2.0.1"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/53441bbaf8c8cfbd820d662b0d62b330482c37058816cfd9ea6ea8762def51a4b9f1b7b1522b0a19cbd7d3945cb9cfae23a179bb3b92f589f3359d976d7f3cd4
   languageName: node
   linkType: hard
 
@@ -3711,6 +4350,24 @@ __metadata:
     remove-trailing-slash: "npm:^0.1.1"
     uuid: "npm:^8.3.2"
   checksum: 10/4681576f2cfeec663030447189cc86dcf7438dfbc82d41008b90e9fdb9c7130133ea3076c74178fb6401c0dce7a176a69fed42d21bc87088ab8c643435e956f0
+  languageName: node
+  linkType: hard
+
+"@medusajs/telemetry@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/telemetry@npm:2.0.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.22.10"
+    axios: "npm:^0.21.4"
+    axios-retry: "npm:^3.1.9"
+    boxen: "npm:^5.0.1"
+    ci-info: "npm:^3.2.0"
+    configstore: "npm:5.0.1"
+    global: "npm:^4.4.0"
+    is-docker: "npm:^2.2.1"
+    remove-trailing-slash: "npm:^0.1.1"
+    uuid: "npm:^8.3.2"
+  checksum: 10/c4580651b4159db4bf230649855fe27fe19b37131f61c9df731aca4932eeacdad633fb25f0d30f061860b19b755e9d4ee4a82137bc80039d5bf5e1a95e4d1ed6
   languageName: node
   linkType: hard
 
@@ -3750,6 +4407,24 @@ __metadata:
     vite:
       optional: true
   checksum: 10/e823fb7c40cfdc5025c6ba287cab09d801348296b4fd81b801fb6cfc3de6979d5913239bfb1104c4c8eb4a03fbfe564dd4f2cd146c046bb0dba5523d24839190
+  languageName: node
+  linkType: hard
+
+"@medusajs/types@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/types@npm:2.0.1"
+  dependencies:
+    bignumber.js: "npm:^9.1.2"
+  peerDependencies:
+    awilix: ^8.0.1
+    ioredis: ^5.4.1
+    vite: ^5.2.11
+  peerDependenciesMeta:
+    ioredis:
+      optional: true
+    vite:
+      optional: true
+  checksum: 10/e5452513d8db360eff972dd41b7297b4f5d8a89fa8137572186f193b4a77baa972d6646696be7a0e38e1eaed9a7d947b45585b1ab0c13ad16b7e9155c1aec244
   languageName: node
   linkType: hard
 
@@ -3820,6 +4495,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/ui@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@medusajs/ui@npm:4.0.1"
+  dependencies:
+    "@medusajs/icons": "npm:^2.0.1"
+    "@radix-ui/react-accordion": "npm:1.2.0"
+    "@radix-ui/react-alert-dialog": "npm:1.1.1"
+    "@radix-ui/react-avatar": "npm:1.1.0"
+    "@radix-ui/react-checkbox": "npm:1.1.1"
+    "@radix-ui/react-dialog": "npm:1.1.1"
+    "@radix-ui/react-dropdown-menu": "npm:2.1.1"
+    "@radix-ui/react-label": "npm:2.1.0"
+    "@radix-ui/react-popover": "npm:1.1.1"
+    "@radix-ui/react-portal": "npm:1.1.1"
+    "@radix-ui/react-radio-group": "npm:1.2.0"
+    "@radix-ui/react-select": "npm:2.1.1"
+    "@radix-ui/react-slot": "npm:1.1.0"
+    "@radix-ui/react-switch": "npm:1.1.0"
+    "@radix-ui/react-tabs": "npm:1.1.0"
+    "@radix-ui/react-tooltip": "npm:1.1.2"
+    clsx: "npm:^1.2.1"
+    copy-to-clipboard: "npm:^3.3.3"
+    cva: "npm:1.0.0-beta.1"
+    prism-react-renderer: "npm:^2.0.6"
+    prismjs: "npm:^1.29.0"
+    react-aria: "npm:^3.33.1"
+    react-currency-input-field: "npm:^3.6.11"
+    react-stately: "npm:^3.31.1"
+    sonner: "npm:^1.5.0"
+    tailwind-merge: "npm:^2.2.1"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 10/f67962c2b39832a421a74b598ca6013990a2cb88e42c51cb1120c6a170abdfef6b98f84fc1ddad08252886d747bc2abe8ba588b8d7a2993dd4dcf837acf77b63
+  languageName: node
+  linkType: hard
+
 "@medusajs/user@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/user@npm:2.0.0"
@@ -3832,6 +4544,21 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/59596167d1529e0001c97108f03955fb015eabf832786bbf06aacd0eba0cadb4b1d653e56f226f47fef9e39af8e790a216306dc42d6b7e54ed8025be0061e95e
+  languageName: node
+  linkType: hard
+
+"@medusajs/user@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/user@npm:2.0.1"
+  dependencies:
+    jsonwebtoken: "npm:^9.0.2"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/866941ffe2098e779bde18fa718f2482950c831547700a8e677b5d63d01ae5dcf4bd7e1fd2f20a06dd8ef776fdc9ae3d867419f94f393a915f843820751c292b
   languageName: node
   linkType: hard
 
@@ -3880,6 +4607,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@medusajs/workflow-engine-inmemory@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/workflow-engine-inmemory@npm:2.0.1"
+  dependencies:
+    cron-parser: "npm:^4.9.0"
+    ulid: "npm:^2.3.0"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/370c516257e3555d93b58bfff0a40266825f787d5f5e7f6de1501068696d3f987e2687268254c6466109ee1864d96fe12d89e773522882278f6ba9304c863acd
+  languageName: node
+  linkType: hard
+
 "@medusajs/workflow-engine-redis@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/workflow-engine-redis@npm:2.0.0"
@@ -3894,6 +4637,23 @@ __metadata:
     "@mikro-orm/postgresql": 5.9.7
     awilix: ^8.0.1
   checksum: 10/dcfa1787e47f88cac610540e2c4e35dacd62cc3233fe3499fc9f7180818172ddb3d8cf5b04169b98184890d66907d41bbe8840eae87bbaf13781ffcd409ee820
+  languageName: node
+  linkType: hard
+
+"@medusajs/workflow-engine-redis@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@medusajs/workflow-engine-redis@npm:2.0.1"
+  dependencies:
+    bullmq: "npm:5.13.0"
+    ioredis: "npm:^5.4.1"
+    ulid: "npm:^2.3.0"
+  peerDependencies:
+    "@medusajs/framework": ^2.0.0
+    "@mikro-orm/core": 5.9.7
+    "@mikro-orm/migrations": 5.9.7
+    "@mikro-orm/postgresql": 5.9.7
+    awilix: ^8.0.1
+  checksum: 10/de936594a558f90fe5f5f3f7b92d4f8656fb8bc5c630fa0445a9831081c5b2d1ac41667698aba8e57d9d777f42a39913f03ced274a704eca313f10eadac9b57d
   languageName: node
   linkType: hard
 
@@ -8306,6 +9066,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-serve-static-core@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "@types/express-serve-static-core@npm:5.0.1"
+  dependencies:
+    "@types/node": "npm:*"
+    "@types/qs": "npm:*"
+    "@types/range-parser": "npm:*"
+    "@types/send": "npm:*"
+  checksum: 10/9bccbf4c927a877e4fe60f9664737ec6ac39d4d906dbb2c8d00f67849bb0968833573c48602b5e77d3e0129fd1bdbe0eae08e68485f028ebf8c557806caa3377
+  languageName: node
+  linkType: hard
+
+"@types/express@npm:*":
+  version: 5.0.0
+  resolution: "@types/express@npm:5.0.0"
+  dependencies:
+    "@types/body-parser": "npm:*"
+    "@types/express-serve-static-core": "npm:^5.0.0"
+    "@types/qs": "npm:*"
+    "@types/serve-static": "npm:*"
+  checksum: 10/45b199ab669caa33e6badafeebf078e277ea95042309d325a04b1ec498f33d33fd5a4ae9c8e358342367b178fe454d7323c5dfc8002bf27070b210a2c6cc11f0
+  languageName: node
+  linkType: hard
+
 "@types/express@npm:^4.17.17":
   version: 4.17.21
   resolution: "@types/express@npm:4.17.21"
@@ -8432,6 +9216,15 @@ __metadata:
   version: 0.7.34
   resolution: "@types/ms@npm:0.7.34"
   checksum: 10/f38d36e7b6edecd9badc9cf50474159e9da5fa6965a75186cceaf883278611b9df6669dc3a3cc122b7938d317b68a9e3d573d316fcb35d1be47ec9e468c6bd8a
+  languageName: node
+  linkType: hard
+
+"@types/multer@npm:^1.4.12":
+  version: 1.4.12
+  resolution: "@types/multer@npm:1.4.12"
+  dependencies:
+    "@types/express": "npm:*"
+  checksum: 10/3d2b32da58ddd67f972d4ef1021492f78d65f33f936b6fb25dd461bb6cc7b03bfd1de1a11562c4310680dac8054e4398038db51767a0ffbf1fe62457b3706e95
   languageName: node
   linkType: hard
 
@@ -15620,8 +16413,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "my-monorepo@workspace:."
   dependencies:
+    "@medusajs/medusa": "npm:^2.0.1"
+    "@types/multer": "npm:^1.4.12"
     cors: "npm:^2.8.5"
     express: "npm:^4.21.1"
+    multer: "npm:^1.4.5-lts.1"
     turbo: "npm:latest"
     typescript: "npm:latest"
   languageName: unknown
