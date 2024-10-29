@@ -73,6 +73,46 @@ const ProductDocumentsTab = ({ product }: ProductTabsProps) => {
   const [documents, setDocuments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+
+  let downloadFile = async (fileName: string) => {
+
+    let product_id = product.id;
+    console.log(fileName);
+
+
+    try {
+      
+      let response = await fetch(`http://localhost:9000/product-documents/download-file`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ file_name: fileName, product_id: product_id }),
+      });
+      
+      if (response.ok) {
+        // Użycie Blob do pobrania pliku
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName; // Ustawienie nazwy pliku do pobrania
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    } else {
+        console.error('Error downloading file:', response.statusText);
+    }
+
+
+
+    }catch (error) {
+      console.error("Error fetching documents:", error);
+    }
+    
+  };
+
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
@@ -112,7 +152,7 @@ const ProductDocumentsTab = ({ product }: ProductTabsProps) => {
                 </Table.Cell>
                 <Table.Cell className="px-2 border-r text-center">{doc.language}</Table.Cell>
                 <Table.Cell className="px-4 border-r text-center">{doc.document_type}</Table.Cell>
-                <Table.Cell className="px-4 flex justify-center items-center"><ArrowDownTray className=" cursor-default hover:cursor-pointer"/></Table.Cell>
+                <Table.Cell className="px-4 flex justify-center items-center"><ArrowDownTray className=" cursor-default hover:cursor-pointer" onClick={()=>downloadFile(doc.file_name)}/></Table.Cell>
               </Table.Row>
             ))
           ) : (
