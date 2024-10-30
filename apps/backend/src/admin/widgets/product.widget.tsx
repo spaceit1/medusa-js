@@ -42,15 +42,17 @@ const ProductWidget = () => {
                 return updatedFiles;
             });
         }
+        
         toast.info("Data saved successfully.", {
             description: "Document has been deleted.",
         });
+        fetchData();
     };
 
     const dropFileFromDB = async (index: number) => {
         try {
             let file_name = relatedFiles[index].file_name;
-            let id = relatedFiles[index].id;
+            let id = getProductIdFromUrl();
 
             let response = await fetch('http://localhost:9000/product-documents/delete', {
                 method: 'POST',
@@ -224,7 +226,8 @@ const ProductWidget = () => {
 
     const handleFileSelection = (selectedFiles: Array<{ file_name: string, language: string, document_type: string }>) => {
         setSelectedFiles(selectedFiles);
-        setModalOpen(false); 
+        setModalOpen(false);
+        fetchData();
     };
 
     const Modal = () => {
@@ -238,7 +241,10 @@ const ProductWidget = () => {
                         {/* <Button id='SaveFileButton' onClick={() => handleFileSelection(selectedFiles)}>Save</Button> */}
                     </FocusModal.Header>
                     <FocusModal.Body className="flex flex-col items-center py-14">
-                        <FileModal onClose={() => setModalOpen(false)} setSelectedFiles={handleFileSelection} />
+                        <FileModal onClose={() => {
+                            fetchData();
+                            setModalOpen(false)
+                        }} setSelectedFiles={handleFileSelection} />
                     </FocusModal.Body>
                 </FocusModal.Content>
             </FocusModal>

@@ -2,40 +2,55 @@ import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
 
-// Load environment variables from .env file
 dotenv.config();
-// Initialize PostgreSQL connection pool
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, // Ensure this environment variable is set
+    connectionString: process.env.DATABASE_URL, 
 });
 
-// Handle POST request
+
 export const POST = async (req: any, res: any) => {
     try {
-        // Read data from request body
+    
         const { product_id, documents } = req.body;
 
-        // Prepare queries to save each document to the database
-        const queries = documents.map(doc => {
-            return pool.query(
-                `INSERT INTO document (file_name, language, document_type, product_id, created_at, updated_at, deleted_at) 
-                VALUES ($1, $2, $3, $4, NOW(), NOW(), NULL)`,
-                [doc.file_name, doc.language, doc.document_type, product_id]
-            );
-        });
+        for (const doc of documents) {
 
-        // Execute all queries asynchronously
-        await Promise.all(queries);
+            const checkFileQuery = `
+                SELECT file_id FROM file 
+                WHERE file_name = $1 AND language = $2 AND document_type = $3
+            `;
+            const checkFileResult = await pool.query(checkFileQuery, [doc.file_name, doc.language, doc.document_type]);
 
-        // Return response after saving data
+            let file_id;
+
+            if (checkFileResult.rows.length > 0) {
+                file_id = checkFileResult.rows[0].file_id;
+            } else {
+                const insertFileQuery = `
+                    INSERT INTO file (file_name, language, document_type, created_at) 
+                    VALUES ($1, $2, $3, NOW())
+                    RETURNING file_id
+                `;
+                const insertFileResult = await pool.query(insertFileQuery, [doc.file_name, doc.language, doc.document_type]);
+                file_id = insertFileResult.rows[0].file_id;
+            }
+
+            const insertProductFileQuery = `
+                INSERT INTO product_file (product_id, file_id)
+                VALUES ($1, $2)
+            `;
+            await pool.query(insertProductFileQuery, [product_id, file_id]);
+        }
+
         res.status(200).json({
-            message: 'Documents saved successfully.',
+            message: 'Documents processed successfully.',
         });
     } catch (error) {
         console.error('Error processing request:', error);
         res.status(500).json({
             message: 'An error occurred while processing the request.',
-            error: error.message, // Avoid exposing sensitive error details in production
+            error: error.message, 
         });
     }
 };
