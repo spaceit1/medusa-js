@@ -36,6 +36,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
             });
             const data = await response.json();
 
@@ -92,6 +93,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ product_id: productId, documents: selectedFiles }),
+                credentials: "include",
             });
 
             if (!response.ok) {
