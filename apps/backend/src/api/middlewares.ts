@@ -3,28 +3,41 @@ import {
   MedusaRequest,
   MedusaResponse,
 } from "@medusajs/framework";
-import { defineMiddlewares } from "@medusajs/medusa";
+import { defineMiddlewares,authenticate } from "@medusajs/medusa";
 import { adminMiddlewares } from "./admin/middlewares";
 import { storeMiddlewares } from "./store/middlewares";
 
 export default defineMiddlewares({
   routes: [
-    ...adminMiddlewares,
-    ...storeMiddlewares,
+      {
+          matcher: "/product-documents/get-all",
+          middlewares: [
+              authenticate("user", ["session", "bearer", "api-key"])
+          ],
+      },
+      {
+        matcher: "/product-documents/get",
+        middlewares: [
+            authenticate("user", ["session", "bearer", "api-key"])
+        ],
+    },
     {
-      matcher: "/store/customers/me",
+      matcher: "/product-documents/upload",
       middlewares: [
-        (req: MedusaRequest, res: MedusaResponse, next: MedusaNextFunction) => {
-          req.allowed = [
-            "orders",
-            "addresses",
-            "employee",
-            "employees",
-          ];
-
-          next();
-        },
+          authenticate("user", ["session", "bearer", "api-key"])
+      ],
+   },
+   {
+      matcher: "/product-documents/save-file",
+      middlewares: [
+        authenticate("user", ["session", "bearer", "api-key"])
       ],
     },
+    {
+      matcher: "/product-documents/delete",
+      middlewares: [
+          authenticate("user", ["session", "bearer", "api-key"])
+      ],
+  },
   ],
 });

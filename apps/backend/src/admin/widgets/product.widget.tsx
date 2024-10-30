@@ -59,6 +59,7 @@ const ProductWidget = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     id: id,
                     file_name: file_name,
@@ -86,6 +87,7 @@ const ProductWidget = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     product_id: getProductIdFromUrl(),
                 }),
@@ -115,8 +117,7 @@ const ProductWidget = () => {
                 documentType,
             }));
             setUploadedFiles([...uploadedFiles, ...newUploadedFiles]);
-            saveLocal();
-            setFiles([]); 
+             
         } else {
             alert("Please select files, language, and document type.");
         }
@@ -140,6 +141,7 @@ const ProductWidget = () => {
             const response = await fetch('http://localhost:9000/product-documents/save-file', {
                 method: 'POST',
                 body: formData,
+                credentials: 'include', 
             });
     
             if (!response.ok) {
@@ -153,13 +155,6 @@ const ProductWidget = () => {
         }
     };
     
-    
-    
-    
-
-    
-
-
     const handleSave = async () => {
         if (uploadedFiles.length > 0) {
             const dataToSend = {
@@ -177,11 +172,14 @@ const ProductWidget = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    credentials: 'include', 
                     body: JSON.stringify(dataToSend),
                 });
 
                 if (response.ok) {
                     const result = await response.json();
+                    saveLocal();
+                    setFiles([]);
                     setUploadedFiles([]);
                     fetchData();
                 } else {
@@ -238,7 +236,6 @@ const ProductWidget = () => {
                 </FocusModal.Trigger>
                 <FocusModal.Content>
                     <FocusModal.Header>
-                        {/* <Button id='SaveFileButton' onClick={() => handleFileSelection(selectedFiles)}>Save</Button> */}
                     </FocusModal.Header>
                     <FocusModal.Body className="flex flex-col items-center py-14">
                         <FileModal onClose={() => {
