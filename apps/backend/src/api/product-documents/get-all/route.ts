@@ -11,8 +11,10 @@ const pool = new Pool({
 
 export const GET = async (req: any, res: any) => {
     
+    let product_id = req.query.product_id;
+
     try {
-        let sql = `SELECT DISTINCT file_name, language, document_type FROM document;`;
+        let sql = `SELECT DISTINCT file_id as id, file_name, language, document_type FROM file;`;
         let result = await pool.query(sql);
         res.status(200).json(result.rows);
     } catch (error) {

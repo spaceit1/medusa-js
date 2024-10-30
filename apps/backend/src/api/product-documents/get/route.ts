@@ -14,20 +14,30 @@ const corsOptions = {
     credentials: true,
 };
 
+// Metoda POST do pobierania plików powiązanych z produktem
 export const POST = async (req: any, res: any) => {
-    
     cors(corsOptions)(req, res, async () => {
         try {
-            let id = req.body.product_id;
-            let sql = `SELECT * FROM document WHERE product_id = $1`;
-            let result = await pool.query(sql, [id]);
-            res.status(200).json(result.rows);
+            const productId = req.body.product_id; // Używamy product_id z ciała zapytania
+
+            // Zapytanie do pobrania plików powiązanych z produktem
+            const sql = `
+                SELECT f.file_id, f.file_name, f.language, f.document_type, f.created_at
+                FROM product_file pf
+                JOIN file f ON pf.file_id = f.file_id
+                WHERE pf.product_id = $1
+            `;
+            const result = await pool.query(sql, [productId]);
+
+            res.status(200).json(result.rows); // Zwracamy powiązane pliki
         } catch (error) {
-            res.status(500).json({error: error.message})
+            res.status(500).json({ error: error.message }); // Zwracamy błąd w przypadku niepowodzenia
         }
     });
 };
 
+// Metoda OPTIONS dla CORS
 export const OPTIONS = cors(corsOptions);
 
+// Zmienna CORS
 export const CORS = false;

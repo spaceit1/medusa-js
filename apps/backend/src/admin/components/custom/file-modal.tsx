@@ -13,7 +13,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
     const [selectedRows, setSelectedRows] = useState<Record<number | string, boolean>>({});
     const [searchTerm, setSearchTerm] = useState("");
     const [languages, setLanguages] = useState<Language[]>([]);
-    const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null); // State for selected language
+    const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
     const [showInstruction, setShowInstruction] = useState(false);
     const [showCertificate, setShowCertificate] = useState(false);
@@ -38,14 +38,14 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                 },
             });
             const data = await response.json();
-    
+
             // Create a Set to remove duplicates
-            const uniqueLanguages: any = Array.from(new Set(data.map(row => row.language)))
+            const uniqueLanguages: any[] = Array.from(new Set(data.map(row => row.language)))
                 .map(lang => ({ label: lang, value: lang }));
-    
+
             setLanguages(uniqueLanguages);
             setRows(data);
-            
+
             const initialSelectionState = data.reduce((acc: Record<number | string, boolean>, row: { id: number | string }) => {
                 acc[row.id] = false;
                 return acc;
@@ -57,7 +57,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             setIsLoading(false);
         }
     };
-    
+
     const toggleSelectRow = (id: number | string) => {
         setSelectedRows((prev) => ({
             ...prev,
@@ -75,7 +75,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
         setSelectedFiles(selectedFiles);
         let productId = getProductIdFromUrl();
         saveDataInDatabase(selectedFiles, productId);
-        onClose(); 
+        onClose();
     };
 
     const getProductIdFromUrl = () => {
@@ -83,7 +83,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
         let splittedUrl = productUrl.split('/');
         return splittedUrl[splittedUrl.length - 1];
     };
-    
+
     const saveDataInDatabase = async (selectedFiles, productId) => {
         try {
             const response = await fetch("http://localhost:9000/product-documents/upload", {
@@ -93,18 +93,17 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                 },
                 body: JSON.stringify({ product_id: productId, documents: selectedFiles }),
             });
-            
+
             if (!response.ok) {
                 throw new Error("Failed to save data in database.");
             }
-            
+
             const data = await response.json();
             console.log("Data saved in database:", data);
-    
+
             toast.info("Data saved successfully.", {
                 description: "Documents have been added to the database.",
             });
-
         } catch (error) {
             console.error("Error saving data in database:", error);
             toast.error("Failed to save data.", {
@@ -112,12 +111,12 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             });
         }
     };
-    
+
     const filteredRows = rows.filter(row => {
         const matchesSearchTerm = row.file_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             row.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
             row.document_type.toLowerCase().includes(searchTerm.toLowerCase());
-        
+
         const matchesDocumentType = (
             (!showInstruction && !showCertificate && !showComplianceCard && !showOther) ||
             (showInstruction && row.document_type === "instruction") ||
@@ -126,9 +125,9 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
             (showOther && row.document_type === "other")
         );
 
-        const matchesLanguage = selectedLanguage ? row.language === selectedLanguage : true; 
+        const matchesLanguage = selectedLanguage ? row.language === selectedLanguage : true;
 
-        return matchesSearchTerm && matchesDocumentType && matchesLanguage; 
+        return matchesSearchTerm && matchesDocumentType && matchesLanguage;
     });
 
     return (
@@ -149,16 +148,16 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                         <div className="flex flex-row gap-2 items-center w-[175px]">
                             <Select onValueChange={(value) => {
                                 if (value === "clear") {
-                                    setSelectedLanguage(null); 
+                                    setSelectedLanguage(null);
                                 } else {
-                                    setSelectedLanguage(value); 
+                                    setSelectedLanguage(value);
                                 }
                             }}>
                                 <Select.Trigger>
                                     <Select.Value placeholder="Select a language" />
                                 </Select.Trigger>
                                 <Select.Content>
-                                    <Select.Item value="clear">Clear Selection</Select.Item> 
+                                    <Select.Item key="clear" value="clear">Clear Selection</Select.Item> {/* Ensure unique key */}
                                     {languages.map((item) => (
                                         <Select.Item key={item.value} value={item.value}>
                                             {item.label}
@@ -166,7 +165,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                                     ))}
                                 </Select.Content>
                             </Select>
-                        </div>    
+                        </div>
                         <div className="flex flex-row gap-2 items-center">
                             <Checkbox
                                 checked={showInstruction}
@@ -197,7 +196,7 @@ export const FileModal: React.FC<FileModalProps> = ({ onClose, setSelectedFiles 
                         </div>
                     </div>
 
-                    <div style={{ width: '100%', maxHeight: '80vh', paddingBottom: '2=50px', overflowY: 'auto' }}>
+                    <div style={{ width: '100%', maxHeight: '80vh', paddingBottom: '250px', overflowY: 'auto' }}>
                         <Table>
                             <Table.Header>
                                 <Table.Row>
