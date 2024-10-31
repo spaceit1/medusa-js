@@ -10,31 +10,31 @@ import { storeMiddlewares } from "./store/middlewares";
 export default defineMiddlewares({
   routes: [
       {
-          matcher: "/product-documents/get-all",
+          matcher: "/admin/product-documents/get-all",
           middlewares: [
               authenticate("user", ["session", "bearer", "api-key"])
           ],
       },
       {
-        matcher: "/product-documents/get",
+        matcher: "/admin/product-documents/get",
         middlewares: [
             authenticate("user", ["session", "bearer", "api-key"])
         ],
     },
     {
-      matcher: "/product-documents/upload",
+      matcher: "/admin/product-documents/upload",
       middlewares: [
           authenticate("user", ["session", "bearer", "api-key"])
       ],
    },
    {
-      matcher: "/product-documents/save-file",
+      matcher: "/admin/product-documents/save-file",
       middlewares: [
         authenticate("user", ["session", "bearer", "api-key"])
       ],
     },
     {
-      matcher: "/product-documents/delete",
+      matcher: "/admin/product-documents/delete",
       middlewares: [
           authenticate("user", ["session", "bearer", "api-key"])
       ],

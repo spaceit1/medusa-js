@@ -54,7 +54,7 @@ const ProductWidget = () => {
             let file_name = relatedFiles[index].file_name;
             let id = getProductIdFromUrl();
 
-            let response = await fetch('http://localhost:9000/product-documents/delete', {
+            let response = await fetch('http://localhost:9000/admin/product-documents/delete', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const ProductWidget = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:9000/product-documents/get', {
+            const response = await fetch('http://localhost:9000/admin/product-documents/get', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const ProductWidget = () => {
         });
     
         try {
-            const response = await fetch('http://localhost:9000/product-documents/save-file', {
+            const response = await fetch('http://localhost:9000/admin/product-documents/save-file', {
                 method: 'POST',
                 body: formData,
                 credentials: 'include', 
@@ -167,7 +167,7 @@ const ProductWidget = () => {
             };
 
             try {
-                const response = await fetch('http://localhost:9000/product-documents/upload', {
+                const response = await fetch('http://localhost:9000/admin/product-documents/upload', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
