@@ -63,7 +63,7 @@ const CustomerWidget = () => {
         if (selectedCustomers.size === 0) return;
 
         try {
-            const response = await fetch("http://localhost:9000/admin/customers/approve", {
+            const response = await fetch("http://localhost:9000/admin/customers/activate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,7 +75,6 @@ const CustomerWidget = () => {
             });
 
             if (response.ok) {
-                // Odśwież listę po zatwierdzeniu
                 fetchCustomers(currentPage);
                 setSelectedCustomers(new Set());
             }
