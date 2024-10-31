@@ -1,13 +1,8 @@
 import { defineWidgetConfig } from "@medusajs/admin-sdk";
-import { Container, Heading, Button, Select, Table, DropdownMenu, IconButton,  Toaster, toast, Input, Switch } from "@medusajs/ui";
-import { EllipsisHorizontal, PencilSquare, Trash, ComputerDesktop, MagnifyingGlass, CloudArrowUp, CheckMini } from "@medusajs/icons";
-import { useState, useRef, useEffect } from "react";
-import { FileModal } from "../components/custom/file-modal";
-import { FocusModal } from "@medusajs/ui";
-
+import { Container, Heading, Button, Table, Input, Switch } from "@medusajs/ui";
+import { useState, useEffect } from "react";
 
 const CustomerWidget = () => {
-
     type Customer = {
         id: string;
         company_name: string | null;
@@ -15,73 +10,177 @@ const CustomerWidget = () => {
         created_at: string;
         approved: boolean;
     };
-    const [customers, setCustomers] = useState<Customer[]>([]);
 
-    const fetchCustomers = async () => {
+    type PaginationMeta = {
+        page: number;
+        limit: number;
+        total: number;
+        pageCount: number;
+    };
+
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(0);
+    const [meta, setMeta] = useState<PaginationMeta | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedCustomers, setSelectedCustomers] = useState<Set<string>>(new Set());
+
+    const fetchCustomers = async (page: number) => {
         try {
-            const response = await fetch("http://localhost:9000/admin/customers/get-customers",{
-                method: "GET",
+            setIsLoading(true);
+            const response = await fetch(
+                `http://localhost:9000/admin/customers/get-customers?page=${page}&limit=25`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                }
+            );
+            const { data, meta } = await response.json();
+            setCustomers(data);
+            setMeta(meta);
+        } catch (error) {
+            console.error("Error fetching customers:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSwitchChange = async (customerId: string, checked: boolean) => {
+        const newSelectedCustomers = new Set(selectedCustomers);
+        if (checked) {
+            newSelectedCustomers.add(customerId);
+        } else {
+            newSelectedCustomers.delete(customerId);
+        }
+        setSelectedCustomers(newSelectedCustomers);
+        console.log("Selected customers:", Array.from(newSelectedCustomers));
+    };
+
+    const handleActivateSelected = async () => {
+        if (selectedCustomers.size === 0) return;
+
+        try {
+            const response = await fetch("http://localhost:9000/admin/customers/approve", {
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
+                body: JSON.stringify({
+                    customerIds: Array.from(selectedCustomers)
+                })
             });
-            const data = await response.json();
-            console.log(data);
-            setCustomers(data);           
+
+            if (response.ok) {
+                // Odśwież listę po zatwierdzeniu
+                fetchCustomers(currentPage);
+                setSelectedCustomers(new Set());
+            }
         } catch (error) {
-            console.error("Error fetching customers:", error);
+            console.error("Error activating customers:", error);
         }
-    }
+    };
 
     useEffect(() => {
-        fetchCustomers();
-    }, []);
+        fetchCustomers(currentPage);
+    }, [currentPage]);
 
-    return(
+    const filteredCustomers = customers.filter(customer =>
+        customer.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const canNextPage = meta ? currentPage < meta.pageCount - 1 : false;
+    const canPreviousPage = currentPage > 0;
+
+    const nextPage = () => {
+        if (canNextPage) {
+            setCurrentPage(prev => prev + 1);
+        }
+    };
+
+    const previousPage = () => {
+        if (canPreviousPage) {
+            setCurrentPage(prev => prev - 1);
+        }
+    };
+
+    return (
         <Container className="divide-y p-0">
             <div className="flex items-center justify-between px-6 py-4">
                 <Heading level="h1">Inactive customers</Heading>
             </div>
             <div className="py-4 px-2">
                 <div className="flex justify-between px-6">
-                        <Button variant="secondary">Activate</Button>
-                        <Input
-                            type="search"
-                            className="w-[216px] flex items-center justify-center"
-                            placeholder="Search"
-                            id="customer-search-bar"
-                            //value={searchTerm}
-                            //onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                    <Button 
+                        variant="secondary" 
+                        onClick={handleActivateSelected}
+                        disabled={selectedCustomers.size === 0}
+                    >
+                        Activate ({selectedCustomers.size})
+                    </Button>
+                    <Input
+                        type="search"
+                        className="w-[216px] flex items-center justify-center"
+                        placeholder="Search by email"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
             </div>
             <div className="px-6 py-4">
-                
-                
-                    <Table>
-                    <Table.Row>
-                        <Table.Cell>Status</Table.Cell>
-                        <Table.Cell>Email</Table.Cell>
-                        <Table.Cell>Company name</Table.Cell>
-                        <Table.Cell>Created</Table.Cell>
-                    </Table.Row>
+                <Table>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Status</Table.HeaderCell>
+                            <Table.HeaderCell>Email</Table.HeaderCell>
+                            <Table.HeaderCell>Company name</Table.HeaderCell>
+                            <Table.HeaderCell>Created</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
                     <Table.Body>
-                    {customers && customers.map((customer) => (
+                        {isLoading ? (
                             <Table.Row>
-                                <Table.Cell><Switch /></Table.Cell>
-                                <Table.Cell>{customer.email}</Table.Cell>
-                                <Table.Cell>{customer.company_name != null ? customer.company_name : "no data"}</Table.Cell>
-                                <Table.Cell>{customer.created_at}</Table.Cell>
+                                <Table.Cell className="text-center">
+                                    Loading...
+                                </Table.Cell>
                             </Table.Row>
-                        ))}
+                        ) : (
+                            filteredCustomers.map((customer) => (
+                                <Table.Row key={customer.id}>
+                                    <Table.Cell>
+                                        <Switch 
+                                            checked={selectedCustomers.has(customer.id)}
+                                            onCheckedChange={(checked) => 
+                                                handleSwitchChange(customer.id, checked)
+                                            }
+                                        />
+                                    </Table.Cell>
+                                    <Table.Cell>{customer.email}</Table.Cell>
+                                    <Table.Cell>
+                                        {customer.company_name ?? "no data"}
+                                    </Table.Cell>
+                                    <Table.Cell>{customer.created_at}</Table.Cell>
+                                </Table.Row>
+                            ))
+                        )}
                     </Table.Body>
                 </Table>
-                
-
+                {meta && (
+                    <Table.Pagination
+                        count={meta.total}
+                        pageSize={meta.limit}
+                        pageIndex={currentPage}
+                        pageCount={meta.pageCount}
+                        canPreviousPage={canPreviousPage}
+                        canNextPage={canNextPage}
+                        previousPage={previousPage}
+                        nextPage={nextPage}
+                    />
+                )}
             </div>
-
-
         </Container>
     );
 };
