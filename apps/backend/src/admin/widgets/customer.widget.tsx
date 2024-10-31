@@ -8,11 +8,12 @@ import { FocusModal } from "@medusajs/ui";
 const CustomerWidget = () => {
 
     type customers = {
+        id: string;
+        company_name: string;
         email: string;
-        name: string;
         created: string;
+        approved: boolean;
     };
-
     const [customers, setCustomers] = useState<customers[]>([]);
 
     const fetchCustomers = async () => {
