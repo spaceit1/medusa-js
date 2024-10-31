@@ -17,7 +17,13 @@ const CustomerWidget = () => {
 
     const fetchCustomers = async () => {
         try {
-            const response = await fetch("http://localhost:9000/admin/customers/get-customers");
+            const response = await fetch("http://localhost:9000/admin/customers/get-customers",{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
             const data = await response.json();
             setCustomers(data);
         } catch (error) {

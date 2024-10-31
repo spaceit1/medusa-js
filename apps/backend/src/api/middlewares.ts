@@ -16,6 +16,12 @@ export default defineMiddlewares({
           ],
       },
       {
+        matcher: "/admin/customers/get-customers",
+        middlewares: [
+            authenticate("user", ["session", "bearer", "api-key"])
+        ],
+    },
+      {
         matcher: "/admin/product-documents/get",
         middlewares: [
             authenticate("user", ["session", "bearer", "api-key"])
