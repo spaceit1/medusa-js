@@ -29,7 +29,7 @@ const CustomerWidget = () => {
         try {
             setIsLoading(true);
             const response = await fetch(
-                `http://localhost:9000/admin/customers/get-customers?page=${page}&limit=25`,
+                `http://localhost:9000/admin/customers/get-customers?page=${page}&limit=20`,
                 {
                     method: "GET",
                     headers: {
