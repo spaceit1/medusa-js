@@ -13,7 +13,6 @@ export const GET = async (req: any, res: any) => {
     const offset = page * limit;
 
     try {
-        // Pobierz total count
         const countQuery = `
             SELECT COUNT(*) 
             FROM customer 
@@ -22,7 +21,6 @@ export const GET = async (req: any, res: any) => {
         const countResult = await pool.query(countQuery);
         const totalCount = parseInt(countResult.rows[0].count);
 
-        // Pobierz dane z paginacją
         const sql = `
             SELECT id, company_name, email, created_at, approved 
             FROM customer 
