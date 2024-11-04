@@ -116,12 +116,11 @@ const ProductDocumentsTab = ({ product }: ProductTabsProps) => {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/product-documents/get`, {
-          method: "POST",
+        const response = await fetch(`http://localhost:9000/product-documents/get?product_id=${product.id}`, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ product_id: product.id }),
         });
 
         const data = await response.json();

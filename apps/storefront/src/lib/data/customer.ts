@@ -66,13 +66,6 @@ export async function signup(_currentState: unknown, formData: FormData) {
       customHeaders
     )
 
-    const loginToken = await sdk.auth.login("customer", "emailpass", {
-      email: customerForm.email,
-      password,
-    })
-
-    setAuthToken(loginToken as string)
-
     const companyForm = {
       name: formData.get("company_name") as string,
       email: formData.get("email") as string,
@@ -96,35 +89,34 @@ export async function signup(_currentState: unknown, formData: FormData) {
       console.log("error creating employee", err)
     })
 
-    revalidateTag(getCacheTag("customers"))
+    revalidateTag(getCacheTag("customers"));
 
-    return {
-      customer: createdCustomer,
-      company: createdCompany,
-      employee: createdEmployee,
-    }
+    return `Account created, please login.`;
+
   } catch (error: any) {
-    return error.toString()
+    return error.toString();
   }
 }
 
 export async function login(_currentState: unknown, formData: FormData) {
+  try {
+
   const email = formData.get("email") as string
   const password = formData.get("password") as string
 
-  const approved = await checkApproved(email);
-
-  if(!approved){
-    return "You are not authorized";
-  }
-
-  try {
     await sdk.auth
       .login("customer", "emailpass", { email, password })
       .then((token) => {
         setAuthToken(token as string)
         revalidateTag(getCacheTag("customers"))
       })
+
+    const approved = await checkApproved(email);
+
+  if(!approved){
+    return "Wait for approval, or contact support.";
+  }
+
   } catch (error: any) {
     return error.toString()
   }
