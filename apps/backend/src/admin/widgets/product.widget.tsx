@@ -82,7 +82,8 @@ const ProductWidget = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://localhost:9000/admin/product-documents/get?product_id=${getProductIdFromUrl}`, {
+
+            const response = await fetch(`http://localhost:9000/admin/product-documents/get?product_id=${getProductIdFromUrl()}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
