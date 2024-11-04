@@ -112,6 +112,12 @@ export async function login(_currentState: unknown, formData: FormData) {
   const email = formData.get("email") as string
   const password = formData.get("password") as string
 
+  const approved = await checkApproved(email);
+
+  if(!approved){
+    return "You are not authorized";
+  }
+
   try {
     await sdk.auth
       .login("customer", "emailpass", { email, password })
@@ -122,6 +128,15 @@ export async function login(_currentState: unknown, formData: FormData) {
   } catch (error: any) {
     return error.toString()
   }
+}
+
+async function checkApproved(email: string) {
+
+  const response = await fetch(`http://localhost:9000/customer/get-customer-approved?email=${email}`);
+  const data = await response.json();
+
+
+  return data.approved;
 }
 
 export async function signout(countryCode: string, customerId: string) {

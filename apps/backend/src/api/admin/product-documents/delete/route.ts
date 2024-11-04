@@ -1,4 +1,3 @@
-import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
 
@@ -8,7 +7,7 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL, 
 });
 
-export const POST = async (req: any, res: any) => {
+export const DELETE = async (req: any, res: any) => {
     try {
         const id = req.body.id; 
         const file_name = req.body.file_name;

@@ -1,4 +1,3 @@
-import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -25,7 +24,7 @@ export const POST = async (req: any, res: any) => {
             const file = req.body.file_name; // Nazwa pliku
 
             // Ustawienie ścieżki do folderu z plikami
-            const uploadDir = path.join(__dirname, '../../../../../uploads');
+            const uploadDir = path.join(__dirname, '../../../../uploads');
             const filePath = path.join(uploadDir, file);
 
             // Sprawdzenie, czy plik istnieje

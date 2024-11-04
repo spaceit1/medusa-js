@@ -55,7 +55,7 @@ const ProductWidget = () => {
             let id = getProductIdFromUrl();
 
             let response = await fetch('http://localhost:9000/admin/product-documents/delete', {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -82,15 +82,13 @@ const ProductWidget = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:9000/admin/product-documents/get', {
-                method: 'POST',
+
+            const response = await fetch(`http://localhost:9000/admin/product-documents/get?product_id=${getProductIdFromUrl()}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify({
-                    product_id: getProductIdFromUrl(),
-                }),
             });
 
             if (!response.ok) {
