@@ -12,7 +12,6 @@ export const DELETE = async (req: any, res: any) => {
         const id = req.body.id; 
         const file_name = req.body.file_name;
 
-        // Najpierw usuwamy rekordy z product_file
         const deleteProductFilesSql = `
             DELETE FROM product_file 
             WHERE file_id = (SELECT file_id FROM file WHERE file_name = $1 LIMIT 1) and product_id = $2
