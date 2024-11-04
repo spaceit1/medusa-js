@@ -1,9 +1,7 @@
-import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
 import cors from 'cors';
-import path from "path";
-import fs from 'fs';
+
 
 dotenv.config();
 

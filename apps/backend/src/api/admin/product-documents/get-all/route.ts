@@ -1,4 +1,3 @@
-import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { Pool } from "pg";
 import dotenv from 'dotenv';
 
