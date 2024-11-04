@@ -61,8 +61,9 @@ const CustomerWidget = () => {
 
     const handleActivateSelected = async () => {
         if (selectedCustomers.size === 0) return;
-
+    
         try {
+            setIsLoading(true);
             const response = await fetch("http://localhost:9000/admin/customers/activate", {
                 method: "POST",
                 headers: {
@@ -73,13 +74,25 @@ const CustomerWidget = () => {
                     customerIds: Array.from(selectedCustomers)
                 })
             });
-
+    
             if (response.ok) {
-                fetchCustomers(currentPage);
+
                 setSelectedCustomers(new Set());
+
+                await fetchCustomers(currentPage);
+                
+                if (customers.length === selectedCustomers.size && currentPage > 0) {
+                    setCurrentPage(0);
+                }
+            } else {
+                const errorData = await response.json();
+                console.error("Error during activation:", errorData);
             }
+    
         } catch (error) {
             console.error("Error activating customers:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
