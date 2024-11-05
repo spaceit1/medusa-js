@@ -94,7 +94,14 @@ export async function signup(_currentState: unknown, formData: FormData) {
     return `Account created, please login.`;
 
   } catch (error: any) {
-    return error.toString();
+    let errorMsg = error.toString();
+
+    if(!errorMsg.includes("Unauthorized")){
+      return errorMsg;
+    }
+    else{
+      return "Account created. Wait for approval."
+    }
   }
 }
 
