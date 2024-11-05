@@ -138,11 +138,12 @@ export async function login(_currentState: unknown, formData: FormData) {
   }
 }
 
+
 async function checkApproved(email: string) {
 
   const response = await fetch(`http://localhost:9000/store/customer/get-customer-approved?email=${email}`,{
     headers: {
-      "x-publishable-api-key":"pk_6f7f134dccad7fdfe1f28e366f61968467fe0982f6f41ed93016e4ca366ccb52"
+      "x-publishable-api-key": process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || '',
     }
   });
   const data = await response.json();
