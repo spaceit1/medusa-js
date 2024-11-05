@@ -1,3 +1,31 @@
+<h1 align="center">Nowe funkcjonalności:</h1>
+  <ol>
+    <li>
+      <h3>Moduł dokumentów</h3>
+      <ul>
+        <li>Dodawanie i usuwanie plików dla wybranego produktu z podziałem na języki i rodzaje dokumentów</li>
+        <li>Dialog do przeglądania wszystkich plików które są już zapisane, umożliwia szybkie przypisanie całego kompletu dokumentów do produktu</li>
+        <li>Zapisywanie plików lokalnie w folderze /backend/uploads</li>
+        <li>Zapisywanie do bazy PostgreSQL</li>
+      </ul>
+    </li>
+    <li>
+      <h3>Moduł zatwierdzania użytkowników</h3>
+      <ul>
+        <li>Zarejestrowani użytkownicy muszą zostać zaakceptowani przez administratora</li>
+        <li>Administrator może w łatwy i szybki sposób przejrzeć i zaakceptować wielu użytkowników jednocześnie</li>
+      </ul>
+    </li>
+    <li>
+      <h3>Migracje bazy danych</h3>
+      <ul>
+        <li>Dodanie tabeli PRODUCT_FILE i FILE</li>
+        <li>Dodanie kolumny approved do tabeli CUSTOMERS</li>
+      </ul>
+    </li>
+  </ol>
+
+
 <h1 align="center">
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/user-attachments/assets/38ba3a7b-e07b-4117-8187-7b171eae3769" alt="B2B Commerce Starter" width="80" height="80"></a>
   <br>
