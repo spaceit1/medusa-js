@@ -9,7 +9,6 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
-// Konfiguracja CORS
 const corsOptions = {
     origin: process.env.STORE_CORS,
     credentials: true,
