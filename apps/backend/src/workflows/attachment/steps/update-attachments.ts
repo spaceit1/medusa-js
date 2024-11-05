@@ -1,5 +1,5 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk";
-import { IAttachmentModuleService, ModuleUpdateAttachment } from "@starter/types";
+import { AttachmentDTO } from "../../../modules/attachment/types";
 import { ATTACHMENT_MODULE } from "../../../modules/attachment";
 
 export const updateAttachmentsStep = createStep(

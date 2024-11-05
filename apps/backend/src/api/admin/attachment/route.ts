@@ -14,8 +14,6 @@ export const createAttachmentSchema = z.object({
    file_name: z.string(),
    language: z.string(),
    document_type: z.string(),
-   product_id: z.string(),
-   // możesz dodać więcej pól metadanych jeśli potrzebujesz
 });
 
 type CreateAttachmentRequestBody = z.infer<typeof createAttachmentSchema>;

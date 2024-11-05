@@ -1,30 +1,43 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk";
-import {
-   IAttachmentModuleService,
-   ModuleCreateAttachment,
-} from "@starter/types";
 import { ATTACHMENT_MODULE } from "../../../modules/attachment";
+import { Type, Language } from "../../../modules/attachment/types";
+import AttachmentModuleService from "src/modules/attachment/service";
+
+export type StepInput = {
+   name: string;
+   file_name: string;
+   type: Type;
+   language: Language;
+};
 
 export const createAttachmentsStep = createStep(
    "create-attachments",
-   // Execute step
-   async (input: ModuleCreateAttachment, { container }) => {
-      const attachmentModuleService =
-         container.resolve<IAttachmentModuleService>(ATTACHMENT_MODULE);
+   async ({ name, file_name, type, language }: StepInput, { container }) => {
+      const attachmentModuleService: AttachmentModuleService =
+         container.resolve(ATTACHMENT_MODULE);
 
-      const attachment = await attachmentModuleService.createAttachment(input);
+      const attachments = await attachmentModuleService.createAttachments({
+         name,
+         file_name,
+         type,
+         language,
+      });
 
-      return new StepResponse(attachment, attachment.id);
+      return new StepResponse(
+         {
+            attachments: attachments,
+         },
+         {
+            attachments: attachments,
+         }
+      );
    },
-   // Compensate (rollback) step
-   async (attachmentId: string, { container }) => {
-      if (!attachmentId) {
-         return;
-      }
+   async ({ attachments }, { container }) => {
+      const attachmentModuleService: AttachmentModuleService =
+         container.resolve(ATTACHMENT_MODULE);
 
-      const attachmentModuleService =
-         container.resolve<IAttachmentModuleService>(ATTACHMENT_MODULE);
-
-      await attachmentModuleService.deleteAttachments([attachmentId]);
+      await attachmentModuleService.deleteAttachments(attachments);
    }
 );
+
+export default createAttachmentsStep;

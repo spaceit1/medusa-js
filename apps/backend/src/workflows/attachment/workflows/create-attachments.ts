@@ -1,10 +1,10 @@
 import { createWorkflow, WorkflowResponse } from "@medusajs/workflows-sdk";
-import { ModuleCreateAttachment } from "@starter/types";
+import { AttachmentDTO } from "../../../modules/attachment/types";
 import { createAttachmentsStep } from "../steps";
 
 export const createAttachmentsWorkflow = createWorkflow(
    "create-attachment",
-   function (input: ModuleCreateAttachment) {
+   function (input: AttachmentDTO) {
       return new WorkflowResponse(createAttachmentsStep(input));
    }
 );

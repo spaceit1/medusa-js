@@ -40,16 +40,24 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "text"
+          "enumItems": [
+            "pl",
+            "en"
+          ],
+          "mappedType": "enum"
         },
-        "document_type": {
-          "name": "document_type",
+        "type": {
+          "name": "type",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "text"
+          "enumItems": [
+            "document",
+            "image"
+          ],
+          "mappedType": "enum"
         },
         "created_at": {
           "name": "created_at",
