@@ -99,26 +99,35 @@ export async function signup(_currentState: unknown, formData: FormData) {
 }
 
 export async function login(_currentState: unknown, formData: FormData) {
-  try {
-
   const email = formData.get("email") as string
   const password = formData.get("password") as string
 
+  const approved = await checkApproved(email);
+
+  if(approved == false){
+    return "Your account is not approved yet. Please check your email for approval."
+  }
+
+  try {
     await sdk.auth
       .login("customer", "emailpass", { email, password })
       .then((token) => {
-        setAuthToken(token as string)
-        revalidateTag(getCacheTag("customers"))
+        if(approved == true){
+          setAuthToken(token as string)
+          revalidateTag(getCacheTag("customers"))
+        }else{
+          return "Wait for approval."
+        }
       })
-
-    const approved = await checkApproved(email);
-
-  if(!approved){
-    return "Wait for approval, or contact support.";
-  }
-
   } catch (error: any) {
-    return error.toString()
+    let errorMsg = error.toString();
+
+    if(errorMsg.includes("mail")){
+      return errorMsg;
+    }
+    else{
+      return "Wait for approval."
+    }
   }
 }
 
