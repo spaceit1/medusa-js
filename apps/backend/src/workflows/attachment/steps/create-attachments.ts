@@ -1,43 +1,23 @@
 import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk";
+import { CreateAttachmentInput } from "..";
 import { ATTACHMENT_MODULE } from "../../../modules/attachment";
-import { Type, Language } from "../../../modules/attachment/types";
-import AttachmentModuleService from "src/modules/attachment/service";
+import AttachmentModuleService from "../../../modules/attachment/service";
 
-export type StepInput = {
-   name: string;
-   file_name: string;
-   type: Type;
-   language: Language;
-};
-
-export const createAttachmentsStep = createStep(
-   "create-attachments",
-   async ({ name, file_name, type, language }: StepInput, { container }) => {
+export const createAttachmentStep = createStep(
+   "create-attachment-step",
+   async (input: CreateAttachmentInput, { container }) => {
       const attachmentModuleService: AttachmentModuleService =
          container.resolve(ATTACHMENT_MODULE);
 
-      const attachments = await attachmentModuleService.createAttachments({
-         name,
-         file_name,
-         type,
-         language,
-      });
+      const attachment = await attachmentModuleService.createAttachments(input);
 
-      return new StepResponse(
-         {
-            attachments: attachments,
-         },
-         {
-            attachments: attachments,
-         }
-      );
+      return new StepResponse(attachment, attachment.id);
    },
-   async ({ attachments }, { container }) => {
+
+   async (id: string, { container }) => {
       const attachmentModuleService: AttachmentModuleService =
          container.resolve(ATTACHMENT_MODULE);
 
-      await attachmentModuleService.deleteAttachments(attachments);
+      await attachmentModuleService.deleteAttachments(id);
    }
 );
-
-export default createAttachmentsStep;

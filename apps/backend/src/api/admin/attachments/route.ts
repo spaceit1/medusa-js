@@ -3,8 +3,10 @@ import type {
    MedusaResponse,
 } from "@medusajs/framework";
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
-import { createAttachmentsWorkflow } from "../../../workflows/attachment/workflows/create-attachments";
-import { AdminCreateAttachmentType } from "./validators";
+import {
+   CreateAttachmentInput,
+   createAttachmentWorkflow,
+} from "src/workflows/attachment";
 
 export const GET = async (
    req: AuthenticatedMedusaRequest,
@@ -30,28 +32,12 @@ export const GET = async (
 };
 
 export const POST = async (
-   req: AuthenticatedMedusaRequest<AdminCreateAttachmentType>,
+   req: AuthenticatedMedusaRequest<CreateAttachmentInput>,
    res: MedusaResponse
 ) => {
-   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
-
-   console.log(...req.validatedBody);
-
-   const { result: createdAttachment } = await createAttachmentsWorkflow.run({
-      input: { ...req.validatedBody },
-      container: req.scope,
+   const { result } = await createAttachmentWorkflow(req.scope).run({
+      input: req.body,
    });
 
-   const {
-      data: [attachment],
-   } = await query.graph(
-      {
-         entity: "attachments",
-         fields: req.remoteQueryConfig.fields,
-         filters: { id: createdAttachment.id },
-      },
-      { throwIfKeyNotFound: true }
-   );
-
-   res.json({ attachment });
+   res.json({ attachment: result });
 };
