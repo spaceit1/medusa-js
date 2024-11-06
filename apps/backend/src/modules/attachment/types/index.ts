@@ -34,6 +34,6 @@ export interface AttachmentToProductDTO {
 
 export interface ProductWithAttachmentsDTO extends ProductDTO {
    attachments?: AttachmentDTO[];
-}
+}  
 
 export type AttachmentData = InferTypeOf<typeof Attachment>;

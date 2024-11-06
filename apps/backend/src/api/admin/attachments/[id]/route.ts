@@ -7,6 +7,10 @@ import {
    AdminGetAttachmentParamsType,
    AdminUpdateAttachmentType,
 } from "../validators";
+import {
+   deleteAttachmentWorkflow,
+   updateAttachmentWorkflow,
+} from "src/workflows/attachment";
 
 export const GET = async (
    req: AuthenticatedMedusaRequest<AdminGetAttachmentParamsType>,
@@ -34,13 +38,9 @@ export const POST = async (
    res: MedusaResponse
 ) => {
    const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
-   const attachmentService = req.scope.resolve("attachmentService");
    const { id } = req.params;
 
-   const updatedAttachment = await attachmentService.update(
-      id,
-      req.validatedBody
-   );
+   await updateAttachmentWorkflow.run({ input: { ...req.body, id } });
 
    const {
       data: [attachment],
@@ -60,14 +60,11 @@ export const DELETE = async (
    req: AuthenticatedMedusaRequest,
    res: MedusaResponse
 ) => {
-   const attachmentService = req.scope.resolve("attachmentService");
    const { id } = req.params;
 
-   await attachmentService.delete(id);
-
-   res.status(200).json({
-      id,
-      object: "attachment",
-      deleted: true,
+   const { result } = await deleteAttachmentWorkflow.run({
+      input: id,
    });
+
+   res.json({ attachment: result });
 };
