@@ -1,9 +1,10 @@
 /* Attachment Query Config */
 export const adminAttachmentFields = [
   "id",
+  "name",
   "file_name",
   "language",
-  "document_type",
+  "type",
   "created_at",
   "updated_at",
   "deleted_at",

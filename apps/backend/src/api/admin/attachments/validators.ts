@@ -8,20 +8,20 @@ export const AdminGetAttachmentParams = createSelectParams();
 export type AdminCreateAttachmentType = z.infer<typeof AdminCreateAttachment>;
 export const AdminCreateAttachment = z
   .object({
+    name: z.string(),
     file_name: z.string(),
     language: z.string(),
-    document_type: z.string(),
-    product_id: z.string()
+    type: z.string(),
   })
   .strict();
 
 export type AdminUpdateAttachmentType = z.infer<typeof AdminUpdateAttachment>;
 export const AdminUpdateAttachment = z
   .object({
+    name: z.string(),
     file_name: z.string().optional(),
     language: z.string().optional(),
-    document_type: z.string().optional(),
-    product_id: z.string().optional()
+    type: z.string().optional(),
   })
   .strict();
 

@@ -15,8 +15,8 @@ export interface AttachmentDTO {
    id: string;
    name: string;
    file_name: string;
-   language: string;
-   document_type: string;
+   language: Language;
+   type: Type;
    created_at: Date;
    updated_at: Date;
    deleted_at: Date | null;
@@ -40,7 +40,7 @@ export type CreateAttachmentData = {
    name: string;
    file_name: string;
    language: Language;
-   document_type: string;
+   type: Type;
    created_at: Date;
    updated_at: Date;
 };
