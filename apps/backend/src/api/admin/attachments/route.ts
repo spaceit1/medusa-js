@@ -10,15 +10,19 @@ export const GET = async (
    req: AuthenticatedMedusaRequest,
    res: MedusaResponse
 ) => {
-   const { fields, limit = 20, offset = 0 } = req.validatedQuery || {};
    const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
 
    const { data: attachments, metadata } = await query.graph({
       entity: "attachments",
-      fields: ["name", "file_name", "language", "type", ...(fields || [])],
+      fields: [
+         "name",
+         "file_name",
+         "language",
+         "type",
+         ...(req.remoteQueryConfig.fields || []),
+      ],
       pagination: {
-         skip: offset,
-         take: limit,
+         ...req.remoteQueryConfig.pagination,
       },
    });
 
