@@ -33,7 +33,7 @@ export const adminAttachmentsMiddlewares: MiddlewareRoute[] = [
       middlewares: [
          validateAndTransformBody(AdminCreateAttachment),
          validateAndTransformQuery(
-            AdminGetAttachmentParams,
+            AdminCreateAttachment,
             adminAttachmentQueryConfig.retrieve
          ),
       ],

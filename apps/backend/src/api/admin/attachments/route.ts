@@ -3,10 +3,8 @@ import type {
    MedusaResponse,
 } from "@medusajs/framework";
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
-import {
-   CreateAttachmentInput,
-   createAttachmentWorkflow,
-} from "src/workflows/attachment";
+import { createAttachmentWorkflow } from "src/workflows/attachment";
+import { AdminCreateAttachmentType } from "./validators";
 
 export const GET = async (
    req: AuthenticatedMedusaRequest,
@@ -32,7 +30,7 @@ export const GET = async (
 };
 
 export const POST = async (
-   req: AuthenticatedMedusaRequest<CreateAttachmentInput>,
+   req: AuthenticatedMedusaRequest<AdminCreateAttachmentType>,
    res: MedusaResponse
 ) => {
    const { result } = await createAttachmentWorkflow(req.scope).run({

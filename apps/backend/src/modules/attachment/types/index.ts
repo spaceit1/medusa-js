@@ -36,13 +36,4 @@ export interface ProductWithAttachmentsDTO extends ProductDTO {
    attachments?: AttachmentDTO[];
 }
 
-export type CreateAttachmentData = {
-   name: string;
-   file_name: string;
-   language: Language;
-   type: Type;
-   created_at: Date;
-   updated_at: Date;
-};
-
 export type AttachmentData = InferTypeOf<typeof Attachment>;

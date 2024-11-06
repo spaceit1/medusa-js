@@ -10,8 +10,8 @@ export const AdminCreateAttachment = z
   .object({
     name: z.string(),
     file_name: z.string(),
-    language: z.string(),
-    type: z.string(),
+    language: z.enum(["en", "pl"]),
+    type: z.enum(["document", "image"]),
   })
   .strict();
 
@@ -20,8 +20,8 @@ export const AdminUpdateAttachment = z
   .object({
     name: z.string(),
     file_name: z.string().optional(),
-    language: z.string().optional(),
-    type: z.string().optional(),
+    language: z.enum(["en", "pl"]),
+    type: z.enum(["document", "image"]),
   })
   .strict();
 
