@@ -11,6 +11,17 @@ export enum Language {
    EN = "en",
 }
 
+export type ModuleAttachment = {
+   id: string;
+   name: string;
+   file_name: string;
+   language: Language;
+   type: Type;
+   created_at: Date;
+   updated_at: Date;
+   deleted_at: Date | null;
+ };
+
 export interface AttachmentDTO {
    id: string;
    name: string;
@@ -37,3 +48,7 @@ export interface ProductWithAttachmentsDTO extends ProductDTO {
 }  
 
 export type AttachmentData = InferTypeOf<typeof Attachment>;
+
+export interface ModuleUpdateAttachment extends Partial<ModuleAttachment> {
+   id: string;
+ }

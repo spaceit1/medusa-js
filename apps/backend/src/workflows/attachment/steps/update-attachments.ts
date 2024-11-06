@@ -2,10 +2,11 @@ import { createStep, StepResponse } from "@medusajs/framework/workflows-sdk";
 import { ATTACHMENT_MODULE } from "../../../modules/attachment";
 import AttachmentModuleService from "../../../modules/attachment/service";
 import { AdminUpdateAttachmentType } from "src/api/admin/attachments/validators";
+import { ModuleUpdateAttachment } from "src/modules/attachment/types";
 
 export const updateAttachmentStep = createStep(
    "update-attachment-step",
-   async (input: AdminUpdateAttachmentType, { container }) => {
+   async (input: ModuleUpdateAttachment, { container }) => {
       const attachmentModuleService: AttachmentModuleService =
          container.resolve(ATTACHMENT_MODULE);
 
